@@ -1,4 +1,4 @@
-# Copy right Andreas Holme og Klaus Jupiter Bentzen
+# Copyright Andreas Holme og Klaus Jupiter Bentzen
 
 import random
 import time
