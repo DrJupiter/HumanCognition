@@ -129,6 +129,14 @@ def valid_state(state: [int, int, bool]) -> bool:
 def generate_scene(state, boat):
     os.system('cls' if os.name == 'nt' else 'clear')
 
+
+    print("""
+        m -> move missionary INTO boat, M -> move missionary FROM boat\n
+        c -> move cannibal INTO boat, C -> move cannibal FROM boat\n
+        b or B -> move boat to the other side and unload its passengers\n 
+        """
+        )
+
     ws = 10
     fill = f"{' '*ws}"
 
