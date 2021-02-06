@@ -3,13 +3,11 @@ from time import perf_counter
 from collections import defaultdict
 
 
-default_dict = defaultdict(lambda: 0)
-
 # returns time snippet bewteen start end append
 
 
 # INSERT TIMED CODE HERE
-def time_dict_calc(state, start_time, end_time):
+def time_dict_calc(default_dict, state, start_time, end_time):
     string_state = f'{state}'
     default_dict[string_state] += end_time - start_time
 
