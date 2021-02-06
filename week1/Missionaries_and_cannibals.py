@@ -63,7 +63,7 @@ def main(current_state = np.array([3,3,1]), default_dict = defaultdict(lambda: 0
         input_move = input("please input move")
         move = parse_move(input_move)
 
-        if move == Move.MoveBoat:
+        if move == Move.Boat:
             break
 
         elif move == Move.AddCannibal:
@@ -105,10 +105,10 @@ def main(current_state = np.array([3,3,1]), default_dict = defaultdict(lambda: 0
         else:
             print("invalid input")
 
-    new_state = state_transition(current_state, move)
+    new_state = state_transition(current_state, move_list)
     
     if valid_state(new_state) and (new_state[0] > 0 or new_state[1] > 0):
-        update_time_dict(default_dict, state, start_time, perf_counter())
+        update_time_dict(default_dict, new_state, start_time, perf_counter())
         print(new_state)
         main(new_state, default_dict)        
     else:
@@ -122,6 +122,10 @@ def valid_state(state: [int, int, bool]) -> bool:
         return True
     else:
         return False
+
+
+def generate_scene(state) -> str:
+    
 
 #"cc mm |~| c m"
 def state_to_title(state):
@@ -201,3 +205,4 @@ print(test_time_dict())
 print(test_state_transition())
 print(test_parse_move())
 print(test_valid_state())
+main()
