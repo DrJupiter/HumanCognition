@@ -137,10 +137,11 @@ def generate_scene(state, boat):
     line = f"|{fill}{river}{fill}|"
     ls = 5
 
+    lstate = state - boat + np.array([0,0,1])
     boat = f"{boat[0]*'m'}{boat[1]*'c'}{' '*(2-sum(boat[:2]))}"    
 
-    left_side_o = f"{state[0]*'m'}"
-    left_side_u =  f"{state[1]*'c'}"
+    left_side_o = f"{lstate[0]*'m'}"
+    left_side_u =  f"{lstate[1]*'c'}"
 
     right_side_o = f"{(3-state[0])*'m'}"
     right_side_u = f"{(3-state[1])*'c'}"
