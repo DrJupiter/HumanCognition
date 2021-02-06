@@ -45,7 +45,7 @@ def parse_move(string: str) -> Move:
         # Add a help message for this in the main loop
         return Move.Invalid
 
-def main(current_state = np.array([0,1,1]), default_dict = defaultdict(lambda: 0), move_list = np.array([0,0,1])):
+def main(current_state = np.array([3,3,1]), default_dict = defaultdict(lambda: 0), move_list = np.array([0,0,1])):
     
     #print(current_state)
     move_list = np.array([0,0,1])
@@ -74,6 +74,7 @@ def main(current_state = np.array([0,1,1]), default_dict = defaultdict(lambda: 0
                     input("no people in boat (press enter to continue)")        
             else:
                 input("Cannot move boat due to too many cannibals on one side (press enter to continue)")
+
 
         elif move == Move.AddCannibal:
             if current_state[2] == 1:
