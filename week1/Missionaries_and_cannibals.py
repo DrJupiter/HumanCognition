@@ -65,6 +65,7 @@ def main(current_state = np.array([3,3,1]), default_dict = defaultdict(lambda: 0
                     if sum(new_state) == 0:
                         generate_scene(new_state, np.array([0,0,0]))
                         print("GG MATE, ez game ez life")
+                        
                         bar_plot(default_dict)
                         exit(0)
 
@@ -185,6 +186,7 @@ def bar_plot(time_dict):
     plt.xlabel('State')
     plt.ylabel('Time Spent in a State')
     plt.bar(states, times, color='red')
+    print(sum(times))
     plt.show()
     
 
