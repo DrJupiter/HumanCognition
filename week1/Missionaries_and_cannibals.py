@@ -3,6 +3,7 @@ from time import perf_counter
 from collections import defaultdict
 from enum import Enum, unique, auto
 import matplotlib.pyplot as plt
+import os
 
 # INSERT TIMED CODE HERE
 def update_time_dict(default_dict, state, start_time, end_time):
@@ -44,7 +45,7 @@ def parse_move(string: str) -> Move:
         # Add a help message for this in the main loop
         return Move.Invalid
 
-def main(current_state = np.array([0,1,1]), default_dict = defaultdict(lambda: 0), move_list = np.array([0,0,1])):
+def main(current_state = np.array([3,3,1]), default_dict = defaultdict(lambda: 0), move_list = np.array([0,0,1])):
     
     #print(current_state)
     move_list = np.array([0,0,1])
@@ -62,7 +63,8 @@ def main(current_state = np.array([0,1,1]), default_dict = defaultdict(lambda: 0
                     update_time_dict(default_dict, new_state, start_time, perf_counter())
                     if sum(new_state) == 0:
                         print("GG MATE, ez game ez life")
-                        return "GG MATE, ez game ez life"
+                        
+                        exit(0)
 
                     main(new_state, default_dict)
                     
@@ -194,5 +196,6 @@ print(test_time_dict())
 print(test_state_transition())
 print(test_parse_move())
 print(test_valid_state())
-
+os.system('cls' if os.name == 'nt' else 'clear')
 print(main())
+
