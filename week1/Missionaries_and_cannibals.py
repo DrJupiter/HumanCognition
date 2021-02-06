@@ -44,19 +44,11 @@ def parse_move(string: str) -> Move:
         # Add a help message for this in the main loop
         return Move.Invalid
 
-
-comparison = np.array([0,0,0]) == np.array([0,0,0])
-print(f"is it = {comparison.all() == True}")
-
 def main(current_state = np.array([0,1,1]), default_dict = defaultdict(lambda: 0), move_list = np.array([0,0,1])):
     
-    print(current_state)
+    #print(current_state)
     move_list = np.array([0,0,1])
-    
-
     start_time = perf_counter()
-
-
 
     while True:
         input_move = input("please input move ")
