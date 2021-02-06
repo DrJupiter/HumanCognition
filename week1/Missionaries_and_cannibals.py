@@ -21,7 +21,7 @@ def parse_move(string: str) -> Move:
     elif string == "M":
         return Move.RemoveMissionary
     elif string == "b":
-        return Move.MoveBoat
+        return Move.Boat
     else:
         # Add a help message for this in the main loop
         return Move.Invalid
@@ -29,7 +29,7 @@ def parse_move(string: str) -> Move:
 
 def test_parse_move() -> bool:
     inputs = [' m ', '   M ', 'c', 'C', 'b', '123123123123']
-    expected_moves = [Move.AddMissionary, Move.RemoveMissionary, Move.AddCannibal, Move.RemoveCannibal, Move.MoveBoat, Move.Invalid]
+    expected_moves = [Move.AddMissionary, Move.RemoveMissionary, Move.AddCannibal, Move.RemoveCannibal, Move.Boat, Move.Invalid]
     for move, e_move in zip(inputs, expected_moves):
         if parse_move(move) == e_move:
             continue
