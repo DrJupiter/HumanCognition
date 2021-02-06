@@ -123,11 +123,25 @@ def valid_state(state: [int, int, bool]) -> bool:
     else:
         return False
 
-def create_bar_plot(time_dict): 
+#"cc mm |~| c m"
+def state_to_title(state):
+    return f"{state[0]*'m'} {state[1]*'c'} /~/ {(3-state[0])*'m'} {(3-state[1])*'c'}"
+
+def bar_plot(time_dict): 
+    plt.rcdefaults()
+    states = []
+    times = []
     for key, val in time_dict.items():
-        print(key,val)
         state = list(map(int, key[1:len(key)-1].split()))
-        print(state)
+        states.append(state_to_title(state))
+        times.append(val)
+    plt.title('c = cannibal, m = misonarie, /~/ = river')
+    plt.suptitle('Misonaries and Cannibals', fontsize = 14, fontweight='bold')
+    plt.xlabel('State')
+    plt.ylabel('Time Spent in a State')
+    plt.bar(states, times, color='red')
+    plt.show()
+    
 
 
 
@@ -187,12 +201,3 @@ print(test_time_dict())
 print(test_state_transition())
 print(test_parse_move())
 print(test_valid_state())
-
-default_dict = defaultdict(lambda: 0) 
-
-state = np.array([3,1,0])
-
-update_time_dict(default_dict, state, 2, 1)
-
-create_bar_plot(default_dict)
-
