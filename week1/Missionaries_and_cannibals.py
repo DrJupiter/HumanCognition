@@ -24,7 +24,6 @@ def state_transition(state, move):
     else:
         print("Error, boat state not True or False")
 
-#print(state_transition(np.array([3,3,1]),np.array([0,2,1])))
 from enum import Enum, unique, auto
 
 
@@ -54,6 +53,15 @@ def parse_move(string: str) -> Move:
         return Move.Invalid
 
 
+def valid_state(state: [int, int, bool]) -> bool:
+    if state[0] == 3 or state[0] == 0:
+        return True
+    elif state[0] >= state[1] and (3-state[0]) >= (3-state[1]):
+        return True
+    else:
+        return False
+
+
 def test_parse_move() -> bool:
     inputs = [' m ', '   M ', 'c', 'C', 'b', '123123123123']
     expected_moves = [Move.AddMissionary, Move.RemoveMissionary, Move.AddCannibal, Move.RemoveCannibal, Move.Boat, Move.Invalid]
@@ -63,8 +71,18 @@ def test_parse_move() -> bool:
         else:
             return False
     return True
-    
 
-#print(test_parse_move())
+def test_valid_state() -> bool:
+    states = [[3,3,0], [1,2,0], [2,2,0], [2,1,0]]
+    e = [True, False, True, False]
+    for state, e_bool in zip(states, e):
+        if valid_state(state) == e_bool:
+            continue
+        else:
+            return False
+    return True
+
+print(test_parse_move())
+print(test_valid_state())
 
     
