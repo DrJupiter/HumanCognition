@@ -1,6 +1,8 @@
 import numpy as np
 from time import perf_counter
 from collections import defaultdict
+import matplotlib.pyplot as plt
+from ast import literal_eval
 
 
 # returns time snippet bewteen start end append
@@ -59,6 +61,11 @@ def valid_state(state: [int, int, bool]) -> bool:
     else:
         return False
 
+def create_bar_plot(time_dict): 
+    for key, val in time_dict.items():
+        print(key,val)
+        state = list(map(int, key[1:len(key)-1].split()))
+        print(state)
 
 def test_parse_move() -> bool:
     inputs = [' m ', '   M ', 'c', 'C', 'b', '123123123123']
@@ -83,4 +90,11 @@ def test_valid_state() -> bool:
 print(test_parse_move())
 print(test_valid_state())
 
-    
+default_dict = defaultdict(lambda: 0) 
+
+state = np.array([3,1,0])
+
+update_time_dict(default_dict, state, 2, 1)
+
+create_bar_plot(default_dict)
+
