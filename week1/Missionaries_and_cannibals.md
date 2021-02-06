@@ -10,8 +10,8 @@
 ## [1] State Transition
 
 ```python
-def state_transition(state, move):
-    # Modifies a state based on a move
+def state_transition(state, move) -> state:
+    # returns new state based on a move and prior state
 ```
 
 ```Python
