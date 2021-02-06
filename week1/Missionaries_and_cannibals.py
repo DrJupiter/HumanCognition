@@ -1,3 +1,5 @@
+# Copyright Klaus Jupiter Bentzen og Andreas Holme
+
 from time import perf_counter
 from collections import defaultdict
 from enum import Enum, unique, auto
