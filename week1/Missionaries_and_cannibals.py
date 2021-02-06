@@ -45,7 +45,7 @@ def parse_move(string: str) -> Move:
         # Add a help message for this in the main loop
         return Move.Invalid
 
-def main(current_state = np.array([3,3,1]), default_dict = defaultdict(lambda: 0), move_list = np.array([0,0,1])):
+def main(current_state = np.array([0,1,1]), default_dict = defaultdict(lambda: 0), move_list = np.array([0,0,1])):
     
     #print(current_state)
     move_list = np.array([0,0,1])
@@ -63,7 +63,7 @@ def main(current_state = np.array([3,3,1]), default_dict = defaultdict(lambda: 0
                 if move_list[0] > 0 or move_list[1] > 0:
                     update_time_dict(default_dict, new_state, start_time, perf_counter())
                     if sum(new_state) == 0:
-                        generate_scene(current_state, move_list)
+                        generate_scene(new_state, np.array([0,0,0]))
                         print("GG MATE, ez game ez life")
                         
                         exit(0)
@@ -71,49 +71,48 @@ def main(current_state = np.array([3,3,1]), default_dict = defaultdict(lambda: 0
                     main(new_state, default_dict)
                     
                 else:
-                    print("no people in boat")        
+                    input("no people in boat (press enter to continue)")        
             else:
-                print("Cannot move boat due to too many cannibals on one side")
-                print(state_to_title(current_state))
+                input("Cannot move boat due to too many cannibals on one side (press enter to continue)")
 
         elif move == Move.AddCannibal:
             if current_state[2] == 1:
                 if current_state[1] > move_list[1] and sum(move_list) != 3:
                     move_list += [0,1,0]
                 else: 
-                    print("invalid movement of cannibal")
+                    input("invalid movement of cannibal (press enter to continue)")
             else:
                 if 3-current_state[1] > move_list[1] and sum(move_list) != 3:
                     move_list += [0,1,0]
                 else:
-                    print("invalid movement of cannibal")
+                    input("invalid movement of cannibal (press enter to continue)")
             
         elif move == Move.RemoveCannibal:
             if move_list[1] != 0:
                 move_list += [0,-1,0]
             else:
-                print("invalid movement of cannibal")
+                input("invalid movement of cannibal (press enter to continue)")
 
         elif move == Move.AddMissionary:
             if current_state[2] == 1:
                 if current_state[0] > move_list[0] and sum(move_list) != 3:
                     move_list += [1,0,0]
                 else:
-                    print("invalid movement of missonary")
+                    input("invalid movement of missonary (press enter to continue)")
             else:
                 if 3-current_state[0] > move_list[0] and sum(move_list) != 3:
                     move_list += [1,0,0]
-                else:
-                    print("invalid movement of missonary")
+                else: 
+                    input("invalid movement of missonary (press enter to continue)")
 
         elif move == Move.RemoveMissionary:
             if move_list[0] != 0:
                 move_list += [-1,0,0]
             else:
-                print("invalid movement of missonary")
+                input("invalid movement of missonary (press enter to continue)")
 
         else:
-            print("invalid input")
+            input("invalid input (press enter to continue)")
 
 
 def valid_state(state: [int, int, bool]) -> bool:
