@@ -1,9 +1,7 @@
 import numpy as np
 from time import perf_counter
 from collections import defaultdict
-
-
-# returns time snippet bewteen start end append
+from enum import Enum, unique, auto
 
 
 # INSERT TIMED CODE HERE
@@ -20,11 +18,6 @@ def state_transition(state, move):
         return state - move
     else:
         print("Error, boat state not True or False")
-
-
-
-from enum import Enum, unique, auto
-
 
 @unique
 class Move(Enum):
