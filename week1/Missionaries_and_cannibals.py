@@ -7,7 +7,7 @@ from collections import defaultdict
 
 
 # INSERT TIMED CODE HERE
-def time_dict_calc(default_dict, state, start_time, end_time):
+def update_time_dict(default_dict, state, start_time, end_time):
     string_state = f'{state}'
     default_dict[string_state] += end_time - start_time
 
