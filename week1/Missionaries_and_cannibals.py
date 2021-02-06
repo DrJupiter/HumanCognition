@@ -4,10 +4,6 @@ from collections import defaultdict
 from enum import Enum, unique, auto
 import matplotlib.pyplot as plt
 
-
-# returns time snippet bewteen start end append
-
-
 # INSERT TIMED CODE HERE
 def update_time_dict(default_dict, state, start_time, end_time):
     string_state = f'{state}'
@@ -49,12 +45,14 @@ def parse_move(string: str) -> Move:
         return Move.Invalid
 
 
-def main(current_state = np.array([3,3,1]), default_dict = defaultdict(lambda: 0), move_list = np.array([0,0,1])):
+comparison = np.array([0,0,0]) == np.array([0,0,0])
+print(f"is it = {comparison.all() == True}")
+
+def main(current_state = np.array([0,1,1]), default_dict = defaultdict(lambda: 0), move_list = np.array([0,0,1])):
     
+    print(current_state)
     move_list = np.array([0,0,1])
-    comparison = current_state == np.array([0,0,0])
-    if comparison.all == True:
-        return "you won the game"
+    
 
     start_time = perf_counter()
 
@@ -67,22 +65,29 @@ def main(current_state = np.array([3,3,1]), default_dict = defaultdict(lambda: 0
         if move == Move.Boat:
             new_state = state_transition(current_state, move_list)
     
-            if valid_state(new_state) and (new_state[0] > 0 or new_state[1] > 0):
-                update_time_dict(default_dict, new_state, start_time, perf_counter())
-                print(state_to_title(new_state))
-                main(new_state, default_dict)        
+            if valid_state(new_state):
+                if move_list[0] > 0 or move_list[1] > 0:
+                    update_time_dict(default_dict, new_state, start_time, perf_counter())
+                    if sum(new_state) == 0:
+                        print("GG MATE, ez game ez life")
+                        return "GG MATE, ez game ez life"
+
+                    main(new_state, default_dict)
+                    
+                else:
+                    print("no people in boat")        
             else:
-                print("Cannot move boat due to too many cannibals on one side or no people in boat")
+                print("Cannot move boat due to too many cannibals on one side")
                 print(state_to_title(current_state))
 
         elif move == Move.AddCannibal:
             if current_state[2] == 1:
-                if current_state[1] > move_list[1] or sum(move_list) != 3:
+                if current_state[1] > move_list[1] and sum(move_list) != 3:
                     move_list += [0,1,0]
                 else: 
                     print("invalid movement of cannibal")
             else:
-                if 3-current_state[1] > move_list[1] or sum(move_list) != 3:
+                if 3-current_state[1] > move_list[1] and sum(move_list) != 3:
                     move_list += [0,1,0]
                 else:
                     print("invalid movement of cannibal")
@@ -95,12 +100,12 @@ def main(current_state = np.array([3,3,1]), default_dict = defaultdict(lambda: 0
 
         elif move == Move.AddMissionary:
             if current_state[2] == 1:
-                if current_state[0] > move_list[0] or sum(move_list) != 3:
+                if current_state[0] > move_list[0] and sum(move_list) != 3:
                     move_list += [1,0,0]
                 else:
                     print("invalid movement of missonary")
             else:
-                if 3-current_state[0] > move_list[0] or sum(move_list) != 3:
+                if 3-current_state[0] > move_list[0] and sum(move_list) != 3:
                     move_list += [1,0,0]
                 else:
                     print("invalid movement of missonary")
@@ -142,10 +147,6 @@ def bar_plot(time_dict):
     plt.bar(states, times, color='red')
     plt.show()
     
-
-
-
-
 
 ### Test functions:
 
@@ -202,4 +203,4 @@ print(test_state_transition())
 print(test_parse_move())
 print(test_valid_state())
 
-main()
+print(main())
