@@ -33,6 +33,7 @@ state: [u8, u8, bool] = [3, 3, 1]
 <3,1,1> - <2,0,1> = <1,1,0>
 <1,1,0>
 ```
+
 ```python
 from enum import Enum, unique
 
