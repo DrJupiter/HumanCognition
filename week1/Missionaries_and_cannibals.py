@@ -112,7 +112,7 @@ def main(current_state = np.array([3,3,1]), default_dict = defaultdict(lambda: 0
         print(new_state)
         main(new_state, default_dict)        
     else:
-        print("Cannot move boat due to too many cannibals on one side")
+        print("Cannot move boat due to too many cannibals on one side or no people in boat")
 
 
 def valid_state(state: [int, int, bool]) -> bool:
