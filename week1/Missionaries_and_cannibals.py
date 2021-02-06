@@ -2,16 +2,17 @@ import numpy as np
 from time import perf_counter
 from collections import defaultdict
 
-""" 
+
 default_dict = defaultdict(lambda: 0)
 
 # returns time snippet bewteen start end append
-start = perf_counter()
+
 
 # INSERT TIMED CODE HERE
+def time_dict_calc(state, start_time, end_time):
+    string_state = f'{state}'
+    default_dict[string_state] += end_time - start_time
 
-default_dict(state, default_dict[state] + perf_counter()-start)
-"""
 
 # Calculates new state
 def state_transition(state, move):
@@ -24,8 +25,8 @@ def state_transition(state, move):
         print("Error, boat state not True or False")
 
 #print(state_transition(np.array([3,3,1]),np.array([0,2,1])))
-
 from enum import Enum, unique, auto
+
 
 @unique
 class Move(Enum):
@@ -46,7 +47,7 @@ def parse_move(string: str) -> Move:
        return Move.AddMissionary
     elif string == "M":
         return Move.RemoveMissionary
-    elif string == "b" or string == "B":
+    elif string == "b":
         return Move.Boat
     else:
         # Add a help message for this in the main loop
@@ -64,6 +65,6 @@ def test_parse_move() -> bool:
     return True
     
 
-print(test_parse_move())
+#print(test_parse_move())
 
     
