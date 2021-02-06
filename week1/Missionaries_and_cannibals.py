@@ -1,9 +1,14 @@
-import numpy as np
 from time import perf_counter
 from collections import defaultdict
 from enum import Enum, unique, auto
-import matplotlib.pyplot as plt
 import os
+
+# !!!! External modules required !!!!
+# pip install numpy matplotlib
+# to fetch the modules
+import matplotlib.pyplot as plt
+import numpy as np
+
 
 # INSERT TIMED CODE HERE
 def update_time_dict(default_dict, state, start_time, end_time):
@@ -100,18 +105,18 @@ def main(current_state = np.array([3,3,1]), default_dict = defaultdict(lambda: 0
                 if current_state[0] > move_list[0] and sum(move_list) != 3:
                     move_list += [1,0,0]
                 else:
-                    input("invalid movement of missonary (press enter to continue)")
+                    input("invalid movement of missionary  (press enter to continue)")
             else:
                 if 3-current_state[0] > move_list[0] and sum(move_list) != 3:
                     move_list += [1,0,0]
                 else: 
-                    input("invalid movement of missonary (press enter to continue)")
+                    input("invalid movement of missionary  (press enter to continue)")
 
         elif move == Move.RemoveMissionary:
             if move_list[0] != 0:
                 move_list += [-1,0,0]
             else:
-                input("invalid movement of missonary (press enter to continue)")
+                input("invalid movement of missionary  (press enter to continue)")
 
         else:
             input("invalid input (press enter to continue)")
@@ -181,8 +186,8 @@ def bar_plot(time_dict):
         state = list(map(int, key[1:len(key)-1].split()))
         states.append(state_to_title(state))
         times.append(val)
-    plt.title('c = cannibal, m = misonarie, /~/ = river')
-    plt.suptitle('Misonaries and Cannibals', fontsize = 14, fontweight='bold')
+    plt.title('c = cannibal, m = missionary, /~/ = river')
+    plt.suptitle('missionary and Cannibals', fontsize = 14, fontweight='bold')
     plt.xlabel('State')
     plt.ylabel('Time Spent in a State in Seconds')
     plt.bar(states, times, color='red')
@@ -240,10 +245,10 @@ def test_valid_state() -> bool:
             return False
     return True
 
-print(test_time_dict())
-print(test_state_transition())
-print(test_parse_move())
-print(test_valid_state())
+#print(test_time_dict())
+#print(test_state_transition())
+#print(test_parse_move())
+#print(test_valid_state())
 
-print(main())
+main()
 
