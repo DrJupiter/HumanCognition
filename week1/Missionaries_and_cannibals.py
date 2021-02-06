@@ -5,11 +5,10 @@ from collections import defaultdict
 
 default_dict = defaultdict(lambda: 0)
 
-# returns time snippet bewteen start end append
-
+# start_time = perf_counter()
 
 # INSERT TIMED CODE HERE
-def time_dict_calc(state, start_time, end_time):
+def update_time_dict(state, start_time, end_time):
     string_state = f'{state}'
     default_dict[string_state] += end_time - start_time
 
@@ -23,6 +22,18 @@ def state_transition(state, move):
         return state - move
     else:
         print("Error, boat state not True or False")
+
+def test_state_transition() -> bool:
+    input1 = [np.array([3,3,1]),np.array([0,2,0])]
+    input2 = [np.array([0,2,1]),np.array([1,1,1])]
+    expected = [np.array([3,1,0]), np.array([1,3,1])]
+
+    for i in range(len(input1)):
+        comparison = state_transition(input1[i], input2[i]) == expected[i]
+        if comparison.all() == True:
+            return True
+        else:
+            return False
 
 from enum import Enum, unique, auto
 
@@ -82,6 +93,7 @@ def test_valid_state() -> bool:
             return False
     return True
 
+print(test_state_transition())
 print(test_parse_move())
 print(test_valid_state())
 
