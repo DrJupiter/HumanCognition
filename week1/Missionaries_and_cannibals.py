@@ -23,9 +23,9 @@ def state_transition(state, move):
     else:
         print("Error, boat state not True or False")
 
-print(state_transition(np.array([3,3,1]),np.array([0,2,1])))
-from enum import Enum, unique, auto
+#print(state_transition(np.array([3,3,1]),np.array([0,2,1])))
 
+from enum import Enum, unique, auto
 
 @unique
 class Move(Enum):
@@ -46,7 +46,7 @@ def parse_move(string: str) -> Move:
        return Move.AddMissionary
     elif string == "M":
         return Move.RemoveMissionary
-    elif string == "b":
+    elif string == "b" and string == "B":
         return Move.Boat
     else:
         # Add a help message for this in the main loop
