@@ -46,7 +46,7 @@ def parse_move(string: str) -> Move:
        return Move.AddMissionary
     elif string == "M":
         return Move.RemoveMissionary
-    elif string == "b" and string == "B":
+    elif string == "b" or string == "B":
         return Move.Boat
     else:
         # Add a help message for this in the main loop
