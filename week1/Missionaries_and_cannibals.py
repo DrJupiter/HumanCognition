@@ -186,7 +186,7 @@ def bar_plot(time_dict):
     plt.xlabel('State')
     plt.ylabel('Time Spent in a State')
     plt.bar(states, times, color='red')
-    print(sum(times))
+    print(f"Total time spent = {sum(times)} s")
     plt.show()
     
 
