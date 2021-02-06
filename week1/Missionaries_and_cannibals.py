@@ -7,7 +7,7 @@ class Move(Enum):
     RemoveCannibal = auto(),
     AddMissionary = auto(),
     RemoveMissionary = auto(),
-    MoveBoat = auto(),
+    Boat = auto(),
     Invalid = auto(),
 
 def parse_move(string: str) -> Move:
