@@ -13,7 +13,6 @@ def update_time_dict(default_dict, state, start_time, end_time):
     string_state = f'{state}'
     default_dict[string_state] += end_time - start_time
 
-
 # Calculates new state
 def state_transition(state, move):
     
@@ -23,6 +22,8 @@ def state_transition(state, move):
         return state - move
     else:
         print("Error, boat state not True or False")
+
+
 
 from enum import Enum, unique, auto
 
@@ -67,6 +68,37 @@ def create_bar_plot(time_dict):
         state = list(map(int, key[1:len(key)-1].split()))
         print(state)
 
+
+### Test functions:
+
+def test_time_dict() -> bool:
+    input_state = [np.array([3,3,1]),np.array([0,0,0]),np.array([3,3,1])]
+    input_start_time = [2,17,4]
+    input_end_time = [4,7,5]
+    default_dict = defaultdict(lambda:0)
+    for i in range(len(input_state)):
+        update_time_dict(default_dict, input_state[i],input_start_time[i],input_end_time[i])
+    
+    #print(default_dict)
+    #print(default_dict[f'{np.array([3,3,1])}'])
+    
+    if default_dict[f'{np.array([3,3,1])}'] == 3 and default_dict[f'{np.array([0,0,0])}'] == -10:
+        return True
+    else:
+        return False
+
+def test_state_transition() -> bool:
+    input1 = [np.array([3,3,1]),np.array([0,2,0])]
+    input2 = [np.array([0,2,1]),np.array([1,1,1])]
+    expected = [np.array([3,1,0]), np.array([1,3,1])]
+
+    for i in range(len(input1)):
+        comparison = state_transition(input1[i], input2[i]) == expected[i]
+        if comparison.all() == True:
+            return True
+        else:
+            return False
+
 def test_parse_move() -> bool:
     inputs = [' m ', '   M ', 'c', 'C', 'b', '123123123123']
     expected_moves = [Move.AddMissionary, Move.RemoveMissionary, Move.AddCannibal, Move.RemoveCannibal, Move.Boat, Move.Invalid]
@@ -87,6 +119,8 @@ def test_valid_state() -> bool:
             return False
     return True
 
+print(test_time_dict())
+print(test_state_transition())
 print(test_parse_move())
 print(test_valid_state())
 
