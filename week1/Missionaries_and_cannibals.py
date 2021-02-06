@@ -52,6 +52,7 @@ def main(current_state = np.array([3,3,1]), default_dict = defaultdict(lambda: 0
     start_time = perf_counter()
 
     while True:
+        generate_scene(current_state, move_list)
         input_move = input("please input move ")
         move = parse_move(input_move)
 
@@ -123,7 +124,8 @@ def valid_state(state: [int, int, bool]) -> bool:
         return False
 
 # [_, _, 1] -> boat is left side
-def generate_scene(state, boat) -> str:
+def generate_scene(state, boat):
+    os.system('cls' if os.name == 'nt' else 'clear')
 
     ws = 10
     fill = f"{' '*ws}"
@@ -232,6 +234,6 @@ print(test_time_dict())
 print(test_state_transition())
 print(test_parse_move())
 print(test_valid_state())
-os.system('cls' if os.name == 'nt' else 'clear')
+
 print(main())
 
