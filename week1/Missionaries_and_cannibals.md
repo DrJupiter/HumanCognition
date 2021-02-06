@@ -25,6 +25,7 @@ if start_state - new_state
 
 start_state: [u8, u8, bool] = [3, 3, 1]
 state: [u8, u8, bool] = [3, 3, 1]
+<0,1,1>
 <3,3,1> - <0,2,1> = <3,1,0>
 <3,1,0> + <0,1,1> = <3,2,1>
 <3,2,1> - <0,2,1> = <3,0,0>
@@ -32,8 +33,25 @@ state: [u8, u8, bool] = [3, 3, 1]
 <3,1,1> - <2,0,1> = <1,1,0>
 <1,1,0>
 ```
+```python
+from enum import Enum, unique
 
+@unique
+class Move(Enum):
+    AddCannibal,
+    RemoveCannibal,
+    AddMissionary,
+    RemoveMissionary,
+    MoveBoat,
 
+def parse_move(string: str) -> Move:
+    string = string.strip().lower()
+    if string == "c":
+        return Move.AddCannibal
+    elif string == "C":
+        ...
+
+```
 ## [2] Valid State
 
 ```python
@@ -66,16 +84,19 @@ plot.show()
 
 ```python
 def main(current_state):
+    move_list = np.array([0, 0, 1])
+    move = parse_move(input("Please input a move"))
 
-    move = input("Please input a move")
-    new_state = state_transition(current_state, move)
 
-    if valid_state(new_state):
-        draw_new_scene(new_state)
-        main(new_state)        
-    else:
-        display_error("Invalid move")
-        main(current_state)
+    if move == Move.MoveBoat:
+        new_state = state_transition(current_state, move)
+        
+        if valid_state(new_state):
+            draw_new_scene(new_state)
+            main(new_state)        
+        else:
+            display_error("Invalid move")
+            main(current_state)
 ```
 
 ### Rules
