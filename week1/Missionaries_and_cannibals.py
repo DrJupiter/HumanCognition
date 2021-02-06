@@ -184,7 +184,7 @@ def bar_plot(time_dict):
     plt.title('c = cannibal, m = misonarie, /~/ = river')
     plt.suptitle('Misonaries and Cannibals', fontsize = 14, fontweight='bold')
     plt.xlabel('State')
-    plt.ylabel('Time Spent in a State')
+    plt.ylabel('Time Spent in a State in Seconds')
     plt.bar(states, times, color='red')
     print(f"Total time spent = {sum(times)} s")
     plt.show()
