@@ -123,10 +123,41 @@ def valid_state(state: [int, int, bool]) -> bool:
     else:
         return False
 
+# [_, _, 1] -> boat is left side
+def generate_scene(state, boat) -> str:
 
-def generate_scene(state) -> str:
-    return ""
+    ws = 10
+    fill = f"{' '*ws}"
+
+    rs = 15
+    river = f"/{'~'*rs}/"
+
+    line = f"|{fill}{river}{fill}|"
+    ls = 5
+
+    boat = f"{boat[0]*'m'}{boat[1]*'c'}{' '*(2-sum(boat[:2]))}"    
+
+    left_side_o = f"{state[0]*'m'}"
+    left_side_u =  f"{state[1]*'c'}"
+
+    right_side_o = f"{(3-state[0])*'m'}"
+    right_side_u = f"{(3-state[1])*'c'}"
+    if state[2] == 1:
+        rivermidle_o = f"/{boat}{'~'*(rs-2)}/"
+        rivermidle_u = f"/⎻⎻{'~'*(rs-2)}/"
+        middle_o = f"|{(ws - len(left_side_o))*' '}{left_side_o}{rivermidle_o}{right_side_o}{(ws-len(right_side_o))*' '}|\n"
+        middle_u = f"|{(ws - len(left_side_u))*' '}{left_side_u}{rivermidle_u}{right_side_u}{(ws-len(right_side_u))*' '}|\n"
+    else:
+        rivermidle_o = f"/{'~'*(rs-2)}{boat}/"
+        rivermidle_u = f"/{'~'*(rs-2)}⎻⎻/"
+        middle_o = f"|{(ws - len(left_side_o))*' '}{left_side_o}{rivermidle_o}{right_side_o}{(ws-len(right_side_o))*' '}|\n"
+        middle_u = f"|{(ws - len(left_side_u))*' '}{left_side_u}{rivermidle_u}{right_side_u}{(ws-len(right_side_u))*' '}|\n"
     
+
+    print(f"{line}\n"*ls, end='\b')
+    print(middle_o, end='\b')
+    print(middle_u, end='\b')
+    print(f"{line}\n"*ls, end='\b')
 
 #"cc mm |~| c m"
 def state_to_title(state):
@@ -207,4 +238,3 @@ print(test_state_transition())
 print(test_parse_move())
 print(test_valid_state())
 
-main()
