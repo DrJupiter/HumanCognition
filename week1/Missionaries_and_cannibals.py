@@ -2,6 +2,10 @@ import numpy as np
 from time import perf_counter
 from collections import defaultdict
 from enum import Enum, unique, auto
+import matplotlib.pyplot as plt
+
+
+# returns time snippet bewteen start end append
 
 
 # INSERT TIMED CODE HERE
@@ -45,6 +49,72 @@ def parse_move(string: str) -> Move:
         return Move.Invalid
 
 
+def main(current_state = np.array([3,3,1]), default_dict = defaultdict(lambda: 0), move_list = np.array([0,0,1])):
+
+    comparison = current_state == np.array([0,0,0])
+    if comparison.all == True:
+        return "you won the game"
+
+    start_time = perf_counter()
+
+
+
+    while True:
+        input_move = input("please input move")
+        move = parse_move(input_move)
+
+        if move == Move.MoveBoat:
+            break
+
+        elif move == Move.AddCannibal:
+            if current_state[2] == 1:
+                if current_state[1] > move_list[1] or sum(move_list) != 3:
+                    move_list += [0,1,0]
+                else: 
+                    print("invalid movement of cannibal")
+            else:
+                if 3-current_state[1] > move_list[1] or sum(move_list) != 3:
+                    move_list += [0,1,0]
+                else:
+                    print("invalid movement of cannibal")
+            
+        elif move == Move.RemoveCannibal:
+            if move_list[1] != 0:
+                move_list += [0,-1,0]
+            else:
+                print("invalid movement of cannibal")
+
+        elif move == Move.AddMissionary:
+            if current_state[2] == 1:
+                if current_state[0] > move_list[0] or sum(move_list) != 3:
+                    move_list += [1,0,0]
+                else:
+                    print("invalid movement of missonary")
+            else:
+                if 3-current_state[0] > move_list[0] or sum(move_list) != 3:
+                    move_list += [1,0,0]
+                else:
+                    print("invalid movement of missonary")
+
+        elif move == Move.RemoveMissionary:
+            if move_list[0] != 0:
+                move_list += [-1,0,0]
+            else:
+                print("invalid movement of missonary")
+
+        else:
+            print("invalid input")
+
+    new_state = state_transition(current_state, move)
+    
+    if valid_state(new_state) and (new_state[0] > 0 or new_state[1] > 0):
+        update_time_dict(default_dict, state, start_time, perf_counter())
+        print(new_state)
+        main(new_state, default_dict)        
+    else:
+        print("Cannot move boat due to too many cannibals on one side")
+
+
 def valid_state(state: [int, int, bool]) -> bool:
     if state[0] == 3 or state[0] == 0:
         return True
@@ -52,6 +122,14 @@ def valid_state(state: [int, int, bool]) -> bool:
         return True
     else:
         return False
+
+def create_bar_plot(time_dict): 
+    for key, val in time_dict.items():
+        print(key,val)
+        state = list(map(int, key[1:len(key)-1].split()))
+        print(state)
+
+
 
 
 
@@ -110,4 +188,11 @@ print(test_state_transition())
 print(test_parse_move())
 print(test_valid_state())
 
-    
+default_dict = defaultdict(lambda: 0) 
+
+state = np.array([3,1,0])
+
+update_time_dict(default_dict, state, 2, 1)
+
+create_bar_plot(default_dict)
+

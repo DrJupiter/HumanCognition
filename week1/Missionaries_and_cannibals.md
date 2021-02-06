@@ -53,6 +53,11 @@ def parse_move(string: str) -> Move:
         ...
 
 ```
+
+- Make sure you can't move boat if noone is in it. 
+- Make sure you can't move a cannibal/misionary into or out of the boat if there are none.
+- Make sure you can't add more than two people to the boat.
+
 ## [2] Valid State
 
 ```python
@@ -69,7 +74,7 @@ A statedict with an accumalating timer for each state.
 
 ```python
 
-def create_bar_plot(time_dict): -> BarPlot:
+def bar_plot(time_dict): -> BarPlot:
 
 # Sudo code detailing the barplot
 default_dict = defaultdict(lambda: 0)
@@ -86,8 +91,7 @@ plot.show()
 ```python
 def main(current_state):
     move_list = np.array([0, 0, 1])
-    move = parse_move(input("Please input a move"))
-
+    move = parse_move(input("Please input a move")) 
 
     if move == Move.MoveBoat:
         new_state = state_transition(current_state, move)
@@ -98,6 +102,8 @@ def main(current_state):
         else:
             display_error("Invalid move")
             main(current_state)
+
+    ...
 ```
 
 ### Rules
