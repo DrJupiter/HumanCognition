@@ -50,7 +50,8 @@ def parse_move(string: str) -> Move:
 
 
 def main(current_state = np.array([3,3,1]), default_dict = defaultdict(lambda: 0), move_list = np.array([0,0,1])):
-
+    
+    move_list = np.array([0,0,1])
     comparison = current_state == np.array([0,0,0])
     if comparison.all == True:
         return "you won the game"
@@ -60,11 +61,19 @@ def main(current_state = np.array([3,3,1]), default_dict = defaultdict(lambda: 0
 
 
     while True:
-        input_move = input("please input move")
+        input_move = input("please input move ")
         move = parse_move(input_move)
 
         if move == Move.Boat:
-            break
+            new_state = state_transition(current_state, move_list)
+    
+            if valid_state(new_state) and (new_state[0] > 0 or new_state[1] > 0):
+                update_time_dict(default_dict, new_state, start_time, perf_counter())
+                print(state_to_title(new_state))
+                main(new_state, default_dict)        
+            else:
+                print("Cannot move boat due to too many cannibals on one side or no people in boat")
+                print(state_to_title(current_state))
 
         elif move == Move.AddCannibal:
             if current_state[2] == 1:
@@ -105,15 +114,6 @@ def main(current_state = np.array([3,3,1]), default_dict = defaultdict(lambda: 0
         else:
             print("invalid input")
 
-    new_state = state_transition(current_state, move_list)
-    
-    if valid_state(new_state) and (new_state[0] > 0 or new_state[1] > 0):
-        update_time_dict(default_dict, new_state, start_time, perf_counter())
-        print(new_state)
-        main(new_state, default_dict)        
-    else:
-        print("Cannot move boat due to too many cannibals on one side or no people in boat")
-
 
 def valid_state(state: [int, int, bool]) -> bool:
     if state[0] == 3 or state[0] == 0:
@@ -125,6 +125,7 @@ def valid_state(state: [int, int, bool]) -> bool:
 
 
 def generate_scene(state) -> str:
+    return ""
     
 
 #"cc mm |~| c m"
@@ -205,4 +206,5 @@ print(test_time_dict())
 print(test_state_transition())
 print(test_parse_move())
 print(test_valid_state())
+
 main()
