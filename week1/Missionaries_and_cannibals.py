@@ -39,15 +39,15 @@ class Move(Enum):
 
 def parse_move(string: str) -> Move:
     string = string.strip()
-    if string == "c":
+    if string == b"c":
        return Move.AddCannibal
-    elif string == "C":
+    elif string == b"C":
         return Move.RemoveCannibal
-    elif string == "m":
+    elif string == b"m":
        return Move.AddMissionary
-    elif string == "M":
+    elif string == b"M":
         return Move.RemoveMissionary
-    elif string == "b":
+    elif string == b"b":
         return Move.Boat
     else:
         # Add a help message for this in the main loop
