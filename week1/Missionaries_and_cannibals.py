@@ -11,6 +11,7 @@ import os
 import matplotlib.pyplot as plt
 import numpy as np
 
+from getch import _Getch as Getch
 
 # INSERT TIMED CODE HERE
 def update_time_dict(default_dict, state, start_time, end_time):
@@ -52,6 +53,8 @@ def parse_move(string: str) -> Move:
         # Add a help message for this in the main loop
         return Move.Invalid
 
+_getch = Getch()
+
 def main(current_state = np.array([3,3,1]), default_dict = defaultdict(lambda: 0), move_list = np.array([0,0,1])):
     
     #print(current_state)
@@ -60,7 +63,8 @@ def main(current_state = np.array([3,3,1]), default_dict = defaultdict(lambda: 0
 
     while True:
         generate_scene(current_state, move_list)
-        input_move = input("please input move ")
+#        input_move = input("please input move ")
+        input_move = _getch()
         move = parse_move(input_move)
 
         if move == Move.Boat:
