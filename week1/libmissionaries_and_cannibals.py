@@ -31,6 +31,8 @@ class Move(Enum):
     AddMissionary = auto(),
     RemoveMissionary = auto(),
     Boat = auto(),
+    Quit = auto(),
+    Nothing = auto(),
     Invalid = auto(),
 
 def parse_move(string: str) -> Move:
@@ -43,8 +45,10 @@ def parse_move(string: str) -> Move:
        return Move.AddMissionary
     elif string == "M":
         return Move.RemoveMissionary
-    elif string == "b":
+    elif string == "b" or string == "B":
         return Move.Boat
+    elif string == "q" or string == "Q":
+        return Move.Quit
     else:
         # Add a help message for this in the main loop
         return Move.Invalid
