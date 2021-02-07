@@ -32,7 +32,7 @@ class _GetchWindows:
 
     def __call__(self):
         import msvcrt
-        return str(msvcrt.getch())
+        return str(bytes.decode(msvcrt.getch()))
 
 
 
