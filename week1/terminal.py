@@ -6,7 +6,6 @@ from libmissionaries_and_cannibals import parse_move, valid_state, Move, state_t
 
 import numpy as np
 
-
 from getch import _Getch as Getch
 
 _getch = Getch()
