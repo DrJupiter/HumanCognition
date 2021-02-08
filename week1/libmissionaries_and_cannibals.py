@@ -63,7 +63,7 @@ def valid_state(state: [int, int, bool]) -> bool:
 
 
 def state_to_title(state):
-    return f"{state[0]*'m'} {state[1]*'c'} /~/ {(3-state[0])*'m'} {(3-state[1])*'c'}"
+    return f"{state[0]*'m'} {state[1]*'c'} {state[2]*'b /~/'} {(1-state[2])*'/~/ b'} {(3-state[0])*'m'} {(3-state[1])*'c'}"
 
 def bar_plot(time_dict): 
     plt.rcdefaults()
@@ -73,12 +73,16 @@ def bar_plot(time_dict):
         state = list(map(int, key[1:len(key)-1].split()))
         states.append(state_to_title(state))
         times.append(val)
-    plt.title('c = cannibal, m = missionary, /~/ = river')
+    
+
+    plt.title('c = cannibal, m = missionary, /~/ = river, b = boat')
     plt.suptitle('missionary and Cannibals', fontsize = 14, fontweight='bold')
     plt.xlabel('State')
     plt.ylabel('Time Spent in a State in Seconds')
     plt.bar(states, times, color='red')
     print(f"Total time spent = {sum(times)} s")
+    print("items =", time_dict.items())
+    print(len(time_dict))
     plt.show()
     
 
