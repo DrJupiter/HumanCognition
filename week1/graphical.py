@@ -89,7 +89,7 @@ def main(current_state = np.array([3,3,1]), default_dict = defaultdict(lambda: 0
                             bar_plot(default_dict)
                             exit(0)
 
-                        main(new_state, default_dict, err=err)
+                        main(new_state, default_dict, err="")
 
                     else:
                         err = "No people in boat"        
