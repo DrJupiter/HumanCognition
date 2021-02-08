@@ -88,8 +88,13 @@ def render_help_txt(screen, txt_config):
     draw_cann(30,60, screen)
 
 def render_err_txt(screen, err, txt_config):
-    error_txt = txt_config.render(err, False, BLACK)
-    screen.blit(error_txt, (200,20))
+    if type(err) == list:
+        for i in range(len(err)):
+            error_txt = txt_config.render(err[i], False, BLACK)
+            screen.blit(error_txt, (200,20+20*i))
+    else: 
+        error_txt = txt_config.render(err, False, BLACK)
+        screen.blit(error_txt, (200,20))
 
 def generate_scene(state, boat, screen, width, height, txt_config, err=""):
     screen.fill(WHITE)
@@ -120,8 +125,8 @@ if __name__ == "__main__":
     # initial display -> generate_scene(state, boat)
     screen.fill((255, 255, 255))
     pygame.draw.line(screen,BLUE,(int(width*3/10),height),(int(width*7/10),0),int(width*4/10))
-    pygame.draw.line(screen,White,(0,0),(width,0),int(height*2/4))
-    pygame.draw.line(screen,White,(0,height),(width,height),int(height*3/4))
+    pygame.draw.line(screen,WHITE,(0,0),(width,0),int(height*2/4))
+    pygame.draw.line(screen,WHITE,(0,height),(width,height),int(height*3/4))
     #pygame.draw.circle(screen,red,(50,100),10,9)
     pygame.display.update()
     state = np.array([2,2,1])
@@ -143,8 +148,8 @@ if __name__ == "__main__":
             # get width and height
             screen.fill((255, 255, 255))
             pygame.draw.line(screen,BLUE,(int(width*3/10),height),(int(width*7/10),0),int(width*4/10))
-            pygame.draw.line(screen,White,(0,0),(width,0),int(height*2/4))
-            pygame.draw.line(screen,White,(0,height),(width,height),int(height*3/4))
+            pygame.draw.line(screen,WHITE,(0,0),(width,0),int(height*2/4))
+            pygame.draw.line(screen,WHITE,(0,height),(width,height),int(height*3/4))
             draw_state(state, boat, screen)
             pygame.display.update()
 

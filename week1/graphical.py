@@ -95,7 +95,7 @@ def main(current_state = np.array([3,3,1]), default_dict = defaultdict(lambda: 0
                     else:
                         err = "No people in boat"        
                 else:
-                    err = "This movement results in too many cannibals on one side"
+                    err = ["This movement results in","too many cannibals on one side"]
 
 
             elif move == Move.AddCannibal:
