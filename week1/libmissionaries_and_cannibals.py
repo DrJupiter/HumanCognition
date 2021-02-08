@@ -76,7 +76,7 @@ def bar_plot(time_dict):
     
 
     plt.title('c = cannibal, m = missionary, /~/ = river, b = boat')
-    plt.suptitle('missionary and Cannibals', fontsize = 14, fontweight='bold')
+    plt.suptitle('Missionary and Cannibals', fontsize = 14, fontweight='bold')
     plt.xlabel('State')
     plt.ylabel('Time Spent in a State in Seconds')
     plt.bar(states, times, color='red')
