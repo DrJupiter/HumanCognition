@@ -19,7 +19,6 @@ MODS = [K_LSHIFT, K_RSHIFT, K_LCTRL, K_RCTRL, K_LALT, K_RALT, K_LMETA, K_RMETA]
 
 def parse_move_py(event) -> Move:
     mods = pygame.key.get_mods()
-    print(mods, event.key)
     if event.key == pygame.K_q:
         return Move.Quit
     elif event.key == pygame.K_c:
