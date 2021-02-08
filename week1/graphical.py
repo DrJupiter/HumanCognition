@@ -81,7 +81,7 @@ def main(current_state = np.array([3,3,1]), default_dict = defaultdict(lambda: 0
 
                 if valid_state(new_state):
                     if move_list[0] > 0 or move_list[1] > 0:
-                        update_time_dict(default_dict, new_state, start_time, perf_counter())
+                        update_time_dict(default_dict, current_state, start_time, perf_counter())
                         if sum(new_state) == 0:
                             generate_scene(new_state, np.array([0,0,1]), screen, width, height, txt_config, err) 
                             print("GG MATE, ez game ez life")
