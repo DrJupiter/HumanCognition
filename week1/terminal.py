@@ -2,7 +2,7 @@ import os
 from time import perf_counter
 from collections import defaultdict
 
-from libmissionaries_and_cannibals import parse_move, valid_state, Move, state_transition, update_time_dict, bar_plot
+from libmissionaries_and_cannibals import parse_move, valid_state, Move, state_transition, update_time_dict, bar_plot, to_csv
 
 import numpy as np
 
@@ -87,8 +87,9 @@ def main(current_state = np.array([3,3,1]), default_dict = defaultdict(lambda: 0
                         generate_scene(new_state, np.array([0,0,0]))
                         print("GG MATE, ez game ez life")
                         
-                        bar_plot(default_dict)
                         to_csv(default_dict)
+                        bar_plot(default_dict)
+                        
                         exit(0)
 
                     main(new_state, default_dict)
