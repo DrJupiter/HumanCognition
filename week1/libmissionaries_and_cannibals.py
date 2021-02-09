@@ -85,6 +85,17 @@ def bar_plot(time_dict):
     print(len(time_dict))
     plt.show()
     
+def to_csv(default_dict):
+    lines = []
+    for key, val in default_dict.items():
+        state_line = []
+        state = list(map(int, key[1:len(key)-1].split()))
+        state_line.append(state)
+        state_line.append(val)
+        lines.append(state_line)
+    
+    print(lines)
+
 
 ### Test functions:
 
