@@ -84,17 +84,24 @@ def bar_plot(time_dict):
     print("items =", time_dict.items())
     print(len(time_dict))
     plt.show()
-    
+
+import csv    
 def to_csv(default_dict):
+    
     lines = []
+    lines.append(["[Missionay, Cannibals, boat] on left","time_spent"])
     for key, val in default_dict.items():
         state_line = []
         state = list(map(int, key[1:len(key)-1].split()))
         state_line.append(state)
         state_line.append(val)
         lines.append(state_line)
+
+    with open('Miss_and_cann_data.csv', 'w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerows(lines)
     
-    print(lines)
+    #print(f"lines = {lines}")
 
 
 ### Test functions:
