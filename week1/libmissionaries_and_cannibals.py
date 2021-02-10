@@ -76,7 +76,7 @@ def bar_plot(time_dict):
     
 
     plt.title('c = cannibal, m = missionary, /~/ = river, b = boat')
-    plt.suptitle('Missionary and Cannibals', fontsize = 14, fontweight='bold')
+    plt.suptitle('Missionaries and Cannibals', fontsize = 14, fontweight='bold')
     plt.xlabel('State')
     plt.ylabel('Time Spent in a State in Seconds')
     plt.bar(states, times, color='red')
@@ -89,7 +89,7 @@ import csv
 def to_csv(default_dict):
     
     lines = []
-    lines.append(["[Missionay, Cannibals, boat] on left","time_spent"])
+    lines.append(["[Missionaries, Cannibals, boat] on left riverside","time_spent"])
     for key, val in default_dict.items():
         state_line = []
         state = list(map(int, key[1:len(key)-1].split()))
@@ -97,7 +97,7 @@ def to_csv(default_dict):
         state_line.append(val)
         lines.append(state_line)
 
-    with open('Miss_and_cann_data.csv', 'w', newline='') as file:
+    with open('MissAndCannData.csv', 'w', newline='') as file:
         writer = csv.writer(file)
         writer.writerows(lines)
     
