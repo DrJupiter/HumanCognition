@@ -8,6 +8,13 @@ from enum import Enum, unique, auto
 import matplotlib.pyplot as plt
 import numpy as np
 
+# For code path
+import sys
+import os
+from pathlib import Path
+
+# This is used to read files in the module properly when the Main.py script is run from an external location.
+CODE_PATH = Path(*Path(os.path.realpath(sys.argv[0])).parts[:-1])
 
 # INSERT TIMED CODE HERE
 def update_time_dict(default_dict, state, start_time, end_time):
@@ -81,8 +88,6 @@ def bar_plot(time_dict):
     plt.ylabel('Time Spent in a State in Seconds')
     plt.bar(states, times, color='red')
     print(f"Total time spent = {sum(times)} s")
-    print("items =", time_dict.items())
-    print(len(time_dict))
     plt.show()
 
 import csv    
@@ -97,11 +102,13 @@ def to_csv(default_dict):
         state_line.append(val)
         lines.append(state_line)
 
-    with open('MissAndCannData.csv', 'w', newline='') as file:
+    csv_path = CODE_PATH.joinpath('MissAndCannData.csv')
+
+    with open(csv_path, 'w', newline='') as file:
         writer = csv.writer(file)
         writer.writerows(lines)
     
-    #print(f"lines = {lines}")
+    print(f"A csv file containing the time data has been saved to {csv_path}") 
 
 
 ### Test functions:

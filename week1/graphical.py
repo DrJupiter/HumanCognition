@@ -39,22 +39,6 @@ def parse_move_py(event) -> Move:
 
         return Move.Invalid
 
-#while True:
-#    pygame.event.pump()
-#    event = pygame.event.wait()
-##    print(event)
-#    if event.type == QUIT:
-#       break 
-#    elif event.type == VIDEORESIZE:
-#        w, h = pygame.display.get_surface().get_size()
-#        print(w, h)
-#        pygame.display.update()
-#
-#    elif event.type == KEYDOWN:
-#        move = parse_move_py(event) 
-#        print(move)
-#        if move == Move.Quit:
-#            break
 
 def main(current_state = np.array([3,3,1]), default_dict = defaultdict(lambda: 0), move_list = np.array([0,0,1]), err=""):
 
@@ -84,7 +68,6 @@ def main(current_state = np.array([3,3,1]), default_dict = defaultdict(lambda: 0
                         update_time_dict(default_dict, current_state, start_time, perf_counter())
                         if sum(new_state) == 0:
                             generate_scene(new_state, np.array([0,0,1]), screen, width, height, txt_config, err) 
-                            print("GG MATE, ez game ez life")
 
                             to_csv(default_dict)
                             bar_plot(default_dict)

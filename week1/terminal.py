@@ -85,7 +85,7 @@ def main(current_state = np.array([3,3,1]), default_dict = defaultdict(lambda: 0
                     update_time_dict(default_dict, current_state, start_time, perf_counter())
                     if sum(new_state) == 0:
                         generate_scene(new_state, np.array([0,0,0]))
-                        print("GG MATE, ez game ez life")
+                        print("Victory!")
                         
                         to_csv(default_dict)
                         bar_plot(default_dict)
