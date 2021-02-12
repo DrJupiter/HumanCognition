@@ -9,7 +9,7 @@ from libmissionaries_and_cannibals import valid_state, Move, state_transition, u
 import numpy as np
 
 import pygame
-from pygame.constants import RESIZABLE, QUIT, VIDEORESIZE, WINDOWFOCUSLOST, KEYDOWN
+from pygame.constants import RESIZABLE, QUIT, VIDEORESIZE, KEYDOWN
 
 from pygame.constants import K_LSHIFT, K_RSHIFT, K_LCTRL, K_RCTRL, K_LALT, K_RALT, K_LMETA, K_RMETA
 
