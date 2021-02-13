@@ -2,7 +2,7 @@ import numpy as np
 import sys
 import pickle
 np.set_printoptions(threshold=sys.maxsize)
-"""
+
 def line(size):
     M = np.zeros((size, size))
 
@@ -20,10 +20,12 @@ def line(size):
 
 #print(line(24))
 
-q_file = open(f"q_table", "wb")
-pickle.dump(line(24),q_file)
-q_file.close()
+NeruonC = open(f"NeruonC", "wb")
+pickle.dump(line(100),NeruonC)
+NeruonC.close()
+
 """
-q_file = open(f"q_table", "wb")
-print(q_file)
-q_file.close()
+NeruonC = open(f"NeruonC", "wb")
+print(NeruonC)
+NeruonC.close()
+"""

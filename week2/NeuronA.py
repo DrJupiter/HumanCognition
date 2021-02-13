@@ -1,5 +1,6 @@
 import numpy as np
 import sys
+import pickle
 np.set_printoptions(threshold=sys.maxsize)
 
 def circle(radius, size=None):
@@ -15,4 +16,8 @@ def circle(radius, size=None):
     
     return circle
 
-print(circle(10))
+#print(circle(10))
+
+NeruonA = open(f"NeruonA", "wb")
+pickle.dump(circle(100),NeruonA)
+NeruonA.close()
