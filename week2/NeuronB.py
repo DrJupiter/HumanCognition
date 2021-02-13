@@ -11,6 +11,6 @@ def smiley():
 
 #print(smiley())
 
-NeruonB = open(f"NeruonB", "wb")
+NeruonB = open(f"NeuronB", "wb")
 pickle.dump(smiley(),NeruonB)
 NeruonB.close()

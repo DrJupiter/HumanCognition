@@ -18,6 +18,6 @@ def circle(radius, size=None):
 
 #print(circle(10))
 
-NeruonA = open(f"NeruonA", "wb")
-pickle.dump(circle(100),NeruonA)
+NeruonA = open(f"NeuronA", "wb")
+pickle.dump(circle(50),NeruonA)
 NeruonA.close()

@@ -20,7 +20,7 @@ def line(size):
 
 #print(line(24))
 
-NeruonC = open(f"NeruonC", "wb")
+NeruonC = open(f"NeuronC", "wb")
 pickle.dump(line(100),NeruonC)
 NeruonC.close()
 
