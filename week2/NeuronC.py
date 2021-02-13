@@ -1,7 +1,8 @@
 import numpy as np
 import sys
+import pickle
 np.set_printoptions(threshold=sys.maxsize)
-
+"""
 def line(size):
     M = np.zeros((size, size))
 
@@ -17,4 +18,12 @@ def line(size):
 
     return M
 
-print(line(24))
+#print(line(24))
+
+q_file = open(f"q_table", "wb")
+pickle.dump(line(24),q_file)
+q_file.close()
+"""
+q_file = open(f"q_table", "wb")
+print(q_file)
+q_file.close()
