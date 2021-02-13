@@ -15,7 +15,9 @@ import pickle
 np.set_printoptions(threshold=sys.maxsize)
 
 class Neuron():
-
+    """
+    Neuron(INPUT_MATRIX) -> [-1;1], which depicts how close the INPUT_MATRIX was to the Neuron.
+    """
     def __init__(self, type: str):
         self.type = type.strip().lower()
         self.matrix = self.match_type(self.type)
