@@ -4,7 +4,7 @@ from libneuron import Neuron
 
 # Neurons
 neuron_a = Neuron('A')  # \
-neuron_b = Neuron('B')  # | The character/letter in Neuron(character) indicates which type of neuron is instantiated.
+neuron_b = Neuron('B')  #  | The character/letter in Neuron(character) indicates which type of neuron is instantiated.
 neuron_c = Neuron('C')  # /
 
 for _ in range(10):
