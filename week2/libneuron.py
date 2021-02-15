@@ -78,9 +78,6 @@ class Neuron():
         return normalized
 
 
-    def __repr__(self) -> str:
-        return str(self.matrix)
-
 
 def test_neuron():
 
