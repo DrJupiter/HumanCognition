@@ -91,6 +91,7 @@ def test_neuron():
 
     #d = Neuron('Y')
     #print(d(d.matrix))
+
 #b = Neuron('B')
 
 #print(b(b.matrix))
