@@ -89,11 +89,13 @@ def test_neuron():
     print(a.matrix.shape,b.matrix.shape,c.matrix.shape)
     print(a(a.matrix), b(b.matrix), c(c.matrix))
 
-    d = Neuron('Y')
-    print(d(d.matrix))
+    #d = Neuron('Y')
+    #print(d(d.matrix))
 #b = Neuron('B')
 
 #print(b(b.matrix))
+
+#test_neuron()
 
 
 #print(neuron_a(np.full(shape=(100,100), fill_value=-1)))
