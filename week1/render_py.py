@@ -2,6 +2,8 @@ import pygame
 from pygame.constants import QUIT, RESIZABLE, VIDEORESIZE
 import numpy as np
 
+
+
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 RED = (255,0,0)
