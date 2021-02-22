@@ -60,7 +60,9 @@ def generate_points(resolution, step_size, assignment):
 
     return points
 
-assignment = generate_assignments(10, 20)
+if __name__ == "__main__":
 
-print(generate_points((100,100), 10, assignment))
+    assignment = generate_assignments(10, 20)
+    
+    print(generate_points((100,100), 10, assignment))
 
