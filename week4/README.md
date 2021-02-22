@@ -54,7 +54,10 @@ assignment(offsets, type_dict, blue_circle)
 
 Depending on resolution we go some steps up.
 
-
+```python
+draw_x(cord, resolution, color) -> Draws an x at the given position with some color and size based on the resolution.
+draw_o(cord, resolution, color) -> Draws cirlce at the given position with some color and size based on the resolution.
+```
 
 
 # Notes
