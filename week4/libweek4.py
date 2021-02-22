@@ -25,7 +25,6 @@ def generate_pairs(n_pairs, low, high):
     return pairs
 
 def assignment(offsets, n_tiles, type_dict, fill_type):
-    print(offsets)
     miss_counter = 0
     for o in offsets:
         if type_dict[o] == 0:
