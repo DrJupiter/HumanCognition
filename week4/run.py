@@ -3,18 +3,57 @@ import numpy as np
 from pygame.constants import QUIT, RESIZABLE, VIDEORESIZE
 
 from libweek4 import generate_assignments, generate_points
-from graph import circle, cross, render_help_txt_info, render_help_txt_1, render_help_txt_2, render_help_txt_3, generate_scene
+from graph import circle, cross, render_help_txt_info, render_help_txt_1, render_help_txt_2, render_help_txt_3 #, generate_scene
 
 
 width = 800
 height = 800
 
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+RED = (255,0,0)
+BLUE = (0,0,255)
 
+do = 0
 
 assignment = generate_assignments(10, 20)
 
-print(generate_points((width,height), 10, assignment))
+#print(generate_points((width,height), 10, assignment))
 
+def place_points(point_list, width, height, screen):
+    for set in point_list:
+        if set[2] == 1:
+            cross(set[0], set[1], RED, height, width, screen)
+
+        elif set[2] == 2:
+            cross(set[0], set[1], BLUE, height, width, screen)
+        
+        elif set[2] == 3:
+            circle(set[0], set[1], BLUE, height, width, screen)
+
+        elif set[2] == 4:
+            circle(set[0], set[1], BLUE, height, width, screen)
+
+
+def generate_scene(screen, width, height):
+    screen.fill(WHITE)
+
+    if do == 0:
+        place_points(generate_points((width,height), 10, assignment), width, height, screen)
+
+    elif do == 1:
+        render_help_txt_1(screen, txt_config, height, width)
+        
+    elif do == 2:
+        render_help_txt_2(screen, txt_config, height, width)
+
+    elif do == 3:
+        render_help_txt_3(screen, txt_config, height, width)
+
+    elif do == 4:
+        render_help_txt_info(screen, txt_config, height, width)
+
+    pygame.display.update()
 
 
 pygame.display.set_caption("Missionaries and Cannibals Problem")
