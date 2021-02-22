@@ -2,8 +2,9 @@ import pygame
 import numpy as np
 from pygame.constants import QUIT, RESIZABLE, VIDEORESIZE
 
-from libweek4 import generate_assignments, generate_points
-from graph import circle, cross, render_help_txt_info, render_help_txt_1, render_help_txt_2, render_help_txt_3 #, generate_scene
+
+from libweek4 import generate_assignments, generate_points, Shape
+from graph import circle, cross, render_help_txt_info, render_help_txt_1, render_help_txt_2, render_help_txt_3, generate_scene
 
 
 width = 800
@@ -22,20 +23,20 @@ assignment = generate_assignments(10, 20)
 
 def place_points(point_list, width, height, screen):
     for set in point_list:
-        if set[2] == 1:
+        if set[2] == Shape.RedCross:
             cross(set[0], set[1], RED, height, width, screen)
 
-        elif set[2] == 2:
+        elif set[2] == Shape.BlueCross:
             cross(set[0], set[1], BLUE, height, width, screen)
         
-        elif set[2] == 3:
+        elif set[2] == Shape.RedCircle:
+            circle(set[0], set[1], RED, height, width, screen)
+
+        elif set[2] == Shape.BlueCircle:
             circle(set[0], set[1], BLUE, height, width, screen)
 
-        elif set[2] == 4:
-            circle(set[0], set[1], BLUE, height, width, screen)
 
-
-def generate_scene(screen, width, height):
+def generate_scene(screen, width, height, assignment):
     screen.fill(WHITE)
 
     if do == 0:
@@ -68,7 +69,7 @@ txt_config = pygame.font.SysFont('Times New Roman', 40)
 # initial display -> generate_scene(state, boat)
 screen.fill((255, 255, 255))
 
-generate_scene(screen, width, height)
+generate_scene(screen, width, height, assignment)
 
 
 pygame.display.update()
@@ -86,5 +87,5 @@ while True:
         # resize
         # get width and height
         screen.fill((255, 255, 255))
-        generate_scene(screen, width, height)
+        generate_scene(screen, width, height, assignment)
         pygame.display.update()

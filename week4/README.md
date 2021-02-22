@@ -12,7 +12,7 @@
 
 
 ```python
-from itertools import defualtdict
+from collections import defualtdict
 
 resolution = (w, h)
 

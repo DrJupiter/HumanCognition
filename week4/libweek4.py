@@ -78,9 +78,59 @@ def generate_points(resolution, step_size, assignment):
 
     return points
 
+@unique
+class TestType(Enum):
+    Disjunktion = 0,
+    Conjunktion = 1,
+
+
+def generate_tests(n_tests, config, test_type, step_size=10):
+    cases = config*n_tests
+    random.shuffle(cases)
+
+
+    # Make the elements in this also have a boolean variable
+    # which displays wether or not a target is there
+    tests = []
+
+    if test_type == TestType.Disjunktion:
+
+        for case in cases:
+
+            if random.random() >= 0.5:
+                if random.random() >= 0.5:
+                    target = (1, Shape.BlueCross)
+                else:
+                    target = (1, Shape.RedCircle)
+                
+                tests.append(generate_assignments(step_size, case+1, [(case, Shape.RedCross), target]))
+            else:
+                tests.append(generate_assignments(step_size, case, [(case, Shape.RedCross)]))
+
+        
+    
+    elif test_type == TestType.Conjunktion:
+
+        for case in cases:
+            if random.random() >= 0.5:
+                target = (1, Shape.BlueCross)
+
+                tests.append(generate_assignments(step_size, case+1, [(case//2, Shape.RedCross), (case//2, Shape.BlueCircle), target]))
+            else:
+                tests.append(generate_assignments(step_size, case, [(case//2, Shape.RedCross), (case//2, Shape.BlueCircle)]))
+    
+    return tests
+
+
 if __name__ == "__main__":
 
-    assignment = generate_assignments(10, 21, [(20, Shape.RedCross), (1, Shape.BlueCross)])
+    #assignments = generate_assignments(10, 21, [(20, Shape.RedCross), (1, Shape.BlueCross)])
 
-    print(generate_points((100,100), 10, assignment))
+    #print(generate_points((100,100), 10, assignments))
+
+    step_size = 10
+    disjunktion_test = generate_tests(1, [6, 20, 60], TestType.Disjunktion, step_size)
+    conjunkiton_test = generate_tests(1, [6, 20, 60], TestType.Conjunktion, step_size)
+
+
 
