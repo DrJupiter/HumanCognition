@@ -1,7 +1,8 @@
+from collections import defaultdict
 import pygame
 import numpy as np
 from pygame.constants import KEYDOWN, QUIT, RESIZABLE, VIDEORESIZE
-from week4.libweek4 import TestType, generate_tests, generate_points, Shape
+from libweek4 import TestType, generate_tests, generate_points, Shape, update_time_dict
 
 from enum import Enum, unique
 
@@ -131,7 +132,6 @@ class Move(Enum):
     Invalid = 4,
 
 def parse_move_py(event) -> Move:
-    mods = pygame.key.get_mods()
     if event.key == pygame.K_q:
         return Move.Quit
     elif event.key == pygame.K_j:
@@ -151,11 +151,13 @@ def wait():
         if event.type == QUIT:
             exit(0)
         elif event.type == KEYDOWN:
-            break
+            break                
 
 from time import perf_counter
 
 def main(screen, resolution, txt_config, n_tests, config, test_types, step_size):
+
+    time_dict = defaultdict(lambda: 0)
 
     width, height = resolution
 
@@ -177,7 +179,7 @@ def main(screen, resolution, txt_config, n_tests, config, test_types, step_size)
 
         wait()
 
-        for test in tests:
+        for test, target_bool in tests:
 
             start_time = perf_counter()
 
@@ -193,78 +195,40 @@ def main(screen, resolution, txt_config, n_tests, config, test_types, step_size)
 
                 elif event.type == KEYDOWN:
                     move = parse_move_py(event)
+                    print(move, target_bool)
 
                     if move == Move.Right:
-                        # This shall be changed later for a true false target check 
-                        if len(test) % 2 != 0:
+                        update_time_dict(time_dict, (test_type,len(test)-target_bool, target_bool), start_time, perf_counter())
+
+                        if target_bool:
                             print("Correct")
                         else:
                             print("Incorrect")
+                        break
 
-                        new_state = state_transition(current_state, move_list)
+                    elif move == Move.Wrong:
 
-                        if valid_state(new_state):
-                            if move_list[0] > 0 or move_list[1] > 0:
-                                update_time_dict(default_dict, current_state, start_time, perf_counter())
-                                if sum(new_state) == 0:
-                                    generate_scene(new_state, np.array([0,0,1]), screen, width, height, txt_config, err) 
+                        update_time_dict(time_dict, (len(test)-target_bool, target_bool), start_time, perf_counter())
 
-                                    to_csv(default_dict)
-                                    bar_plot(default_dict)
-
-                                    exit(0)
-
-                                main(new_state, default_dict, err="")
-
-                            else:
-                                err = "No people in boat"        
+                        if not target_bool:
+                            print("Correct")
                         else:
-                            err = ["This movement results in","too many cannibals on one side"]
+                            print("Incorrect")
+                        break
 
-
-                    elif move == Move.AddCannibal:
-                        if current_state[2] == 1:
-                            if current_state[1] > move_list[1] and sum(move_list) != 3:
-                                move_list += [0,1,0]
-                            else: 
-                                err = "Invalid movement of cannibal"
-                        else:
-                            if 3-current_state[1] > move_list[1] and sum(move_list) != 3:
-                                move_list += [0,1,0]
-                            else:
-                                err = "Invalid movement of cannibal"
-
-                    elif move == Move.RemoveCannibal:
-                        if move_list[1] != 0:
-                            move_list += [0,-1,0]
-                        else:
-                            err = "Invalid movement of cannibal"
-
-                    elif move == Move.AddMissionary:
-                        if current_state[2] == 1:
-                            if current_state[0] > move_list[0] and sum(move_list) != 3:
-                                move_list += [1,0,0]
-                            else:
-                                err = "Invalid movement of missionary "
-                        else:
-                            if 3-current_state[0] > move_list[0] and sum(move_list) != 3:
-                                move_list += [1,0,0]
-                            else: 
-                                err = "Invalid movement of missionary "
-
-                    elif move == Move.RemoveMissionary:
-                        if move_list[0] != 0:
-                            move_list += [-1,0,0]
-                        else:
-                            err = "Invalid movement of missionary "
-
-                    elif move == Move.Invalid:
-                        err = "Invalid input"
+                    elif move == Move.Nothing or move == Move.Invalid:
+                        continue
 
                     elif move == Move.Quit:
+                        print("Exiting")
                         exit(0)
-                    else:
-                        continue
+                elif event.type == VIDEORESIZE:
+                    width, height = screen.get_size()
+    print(time_dict)
+
+
+ 
+
 
 
 
@@ -284,22 +248,4 @@ if __name__ == "__main__":
 
 
     screen.fill((255, 255, 255))
-
-    generate_scene(screen, width, height, assignment)
-
-    pygame.display.update()
-
-    while True:
-        pygame.event.pump()
-        event = pygame.event.wait()
-
-        if event.type == QUIT:
-            break
-        
-        elif event.type == VIDEORESIZE:
-            width, height = pygame.display.get_surface().get_size()
-            # resize
-            # get width and height
-            screen.fill((255, 255, 255))
-            generate_scene(screen, width, height, assignment)
-            pygame.display.update()
+    main(screen,(width, height), txt_config, 2, [6, 20, 60], [TestType.Disjunktion, TestType.Conjunktion], 10)

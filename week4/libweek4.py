@@ -7,6 +7,7 @@ from enum import Enum, unique
 import random
 
 from math import floor
+from typing import List
 
 @unique
 class Shape(Enum):
@@ -103,9 +104,9 @@ def generate_tests(n_tests, config, test_type, step_size=10):
                 else:
                     target = (1, Shape.RedCircle)
                 
-                tests.append(generate_assignments(step_size, case+1, [(case, Shape.RedCross), target]))
+                tests.append((generate_assignments(step_size, case+1, [(case, Shape.RedCross), target]), True))
             else:
-                tests.append(generate_assignments(step_size, case, [(case, Shape.RedCross)]))
+                tests.append((generate_assignments(step_size, case, [(case, Shape.RedCross)]), False))
 
         
     
@@ -115,18 +116,18 @@ def generate_tests(n_tests, config, test_type, step_size=10):
             if random.random() >= 0.5:
                 target = (1, Shape.BlueCross)
 
-                tests.append(generate_assignments(step_size, case+1, [(case//2, Shape.RedCross), (case//2, Shape.BlueCircle), target]))
+                tests.append((generate_assignments(step_size, case+1, [(case//2, Shape.RedCross), (case//2, Shape.BlueCircle), target]),True))
             else:
-                tests.append(generate_assignments(step_size, case, [(case//2, Shape.RedCross), (case//2, Shape.BlueCircle)]))
+                tests.append((generate_assignments(step_size, case, [(case//2, Shape.RedCross), (case//2, Shape.BlueCircle)]),False))
     
     return tests
 
+def update_time_dict(default_dict, state, start_time, end_time):
+    string_state = f'{state}'
+    default_dict[string_state] += end_time - start_time
 
 if __name__ == "__main__":
 
-    #assignments = generate_assignments(10, 21, [(20, Shape.RedCross), (1, Shape.BlueCross)])
-
-    #print(generate_points((100,100), 10, assignments))
 
     step_size = 10
     disjunktion_test = generate_tests(1, [6, 20, 60], TestType.Disjunktion, step_size)
