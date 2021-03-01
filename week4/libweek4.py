@@ -1,7 +1,7 @@
-
-
+import matplotlib.pyplot as plt
 from collections import defaultdict 
 from enum import Enum, unique
+import numpy as np
 
 
 import random
@@ -124,7 +124,79 @@ def generate_tests(n_tests, config, test_type, step_size=10):
 
 def update_time_dict(default_dict, state, start_time, end_time):
     string_state = f'{state}'
-    default_dict[string_state] += end_time - start_time
+    print(default_dict[string_state])
+    default_dict[string_state].append(end_time - start_time)
+    #default_dict[string_state].append([1])
+
+
+
+
+def plots(time_dict,config):
+    #print("################## TEST ############################") 
+    plt.rcdefaults()
+
+    #print(time_dict)
+
+    disjunk_present = []
+
+    disjunk_present.append(np.array(time_dict['(<TestType.Disjunktion: (0,)>, 6, True)']))
+    disjunk_present.append(np.array(time_dict['(<TestType.Disjunktion: (0,)>, 20, True)']))
+    disjunk_present.append(np.array(time_dict['(<TestType.Disjunktion: (0,)>, 60, True)']))
+    
+    disjunk_absent = []
+    disjunk_absent.append(np.array(time_dict['(<TestType.Disjunktion: (0,)>, 6, False)']))
+    disjunk_absent.append(np.array(time_dict['(<TestType.Disjunktion: (0,)>, 20, False)']))
+    disjunk_absent.append(np.array(time_dict['(<TestType.Disjunktion: (0,)>, 60, False)']))
+
+    conjunk_present = []
+    conjunk_present.append(np.array(time_dict['(<TestType.Conjunktion: (1,)>, 6, True)']))
+    conjunk_present.append(np.array(time_dict['(<TestType.Conjunktion: (1,)>, 20, True)']))
+    conjunk_present.append(np.array(time_dict['(<TestType.Conjunktion: (1,)>, 60, True)']))
+    
+    conjunk_absent = []
+    conjunk_absent.append(np.array(time_dict['(<TestType.Conjunktion: (1,)>, 6, False)']))
+    conjunk_absent.append(np.array(time_dict['(<TestType.Conjunktion: (1,)>, 20, False)']))
+    conjunk_absent.append(np.array(time_dict['(<TestType.Conjunktion: (1,)>, 60, False)']))
+    
+    plot_times = [disjunk_present, disjunk_absent, conjunk_present, conjunk_absent]
+    plot_names = ["disjunk_present", "disjunk_absent", "conjunk_present", "conjunk_absent"]
+
+    x_kords = []
+    y_kords = []
+    y_err = []
+    for j in range(len((plot_times))):
+        x_temp = []
+        y_temp = []
+        err_temp = []
+        for i in range(len(config)):
+            x_temp.append(config[i])
+            y_temp.append(np.mean(plot_times[j][i]))
+            err_temp.append(np.std(plot_times[j][i]))
+        x_kords.append(x_temp)
+        y_kords.append(y_temp)
+        y_err.append(err_temp)
+
+    #print(x_kords)
+    #print(y_kords)
+    #print(y_err)
+
+    plt.figure()
+    for i in range(len(plot_times)):
+        plt.subplot(2,2,i+1)
+        plt.errorbar(x_kords[i], y_kords[i], y_err[i], ecolor = 'red')
+        plt.title(f"{plot_names[i]}")
+        plt.xlabel('number of distractors')
+        plt.ylabel('Time Spent in a State in Seconds')
+    
+    plt.tight_layout()
+    plt.show()
+
+
+
+
+
+
+
 
 if __name__ == "__main__":
 

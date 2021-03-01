@@ -2,7 +2,7 @@ from collections import defaultdict
 import pygame
 import numpy as np
 from pygame.constants import KEYDOWN, QUIT, RESIZABLE, VIDEORESIZE
-from libweek4 import TestType, generate_tests, generate_points, Shape, update_time_dict
+from libweek4 import plots, TestType, generate_tests, generate_points, Shape, update_time_dict
 
 from enum import Enum, unique
 
@@ -140,7 +140,7 @@ def parse_move_py(event) -> Move:
         return Move.Wrong
     else:
         if event.key in MODS:
-            return Move.Nothing
+            return Move.Nothingj
         return Move.Invalid
 
 def wait():
@@ -155,9 +155,11 @@ def wait():
 
 from time import perf_counter
 
+
+
 def main(screen, resolution, txt_config, n_tests, config, test_types, step_size):
 
-    time_dict = defaultdict(lambda: 0)
+    time_dict = defaultdict(list)
 
     width, height = resolution
 
@@ -208,7 +210,7 @@ def main(screen, resolution, txt_config, n_tests, config, test_types, step_size)
 
                     elif move == Move.Wrong:
 
-                        update_time_dict(time_dict, (len(test)-target_bool, target_bool), start_time, perf_counter())
+                        update_time_dict(time_dict, (test_type, len(test)-target_bool, target_bool), start_time, perf_counter())
 
                         if not target_bool:
                             print("Correct")
@@ -224,11 +226,7 @@ def main(screen, resolution, txt_config, n_tests, config, test_types, step_size)
                         exit(0)
                 elif event.type == VIDEORESIZE:
                     width, height = screen.get_size()
-    print(time_dict)
-
-
- 
-
+    plots(time_dict,config)
 
 
 
@@ -248,4 +246,4 @@ if __name__ == "__main__":
 
 
     screen.fill((255, 255, 255))
-    main(screen,(width, height), txt_config, 2, [6, 20, 60], [TestType.Disjunktion, TestType.Conjunktion], 10)
+    main(screen,(width, height), txt_config, 10, [6, 20, 60], [TestType.Disjunktion, TestType.Conjunktion], 10)
