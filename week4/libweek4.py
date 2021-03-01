@@ -181,7 +181,7 @@ def plots(time_dict,config):
     plt.figure()
     for i in range(len(plot_times)):
         plt.subplot(2,2,i+1)
-        plt.errorbar(x_kords[i], y_kords[i], y_err[i], ecolor = 'red')
+        plt.errorbar(x_kords[i], y_kords[i], y_err[i], ecolor = 'red', capsize=10)
         plt.title(f"{plot_names[i]}")
         plt.xlabel('number of distractors')
         plt.ylabel('Time Spent in a State in Seconds')
