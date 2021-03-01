@@ -228,8 +228,6 @@ def main(screen, resolution, txt_config, n_tests, config, test_types, step_size)
                     width, height = screen.get_size()
     plots(time_dict,config)
 
-import seaborn as sns
-
 if __name__ == "__main__":
     width = 800
     height = 800
