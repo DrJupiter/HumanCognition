@@ -128,6 +128,7 @@ def update_time_dict(default_dict, state, start_time, end_time):
     default_dict[string_state].append(end_time - start_time)
     #default_dict[string_state].append([1])
 
+
 def plots(time_dict,config):
     #print("################## TEST ############################") 
     plt.rcdefaults()
@@ -180,7 +181,7 @@ def plots(time_dict,config):
     plt.figure()
     for i in range(len(plot_times)):
         plt.subplot(2,2,i+1)
-        plt.errorbar(x_kords[i], y_kords[i], y_err[i], ecolor = 'red',capsize = 10)
+        plt.errorbar(x_kords[i], y_kords[i], y_err[i], ecolor = 'red')
         plt.title(f"{plot_names[i]}")
         plt.xlabel('number of distractors')
         plt.ylabel('Time Spent in a State in Seconds')

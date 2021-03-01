@@ -228,6 +228,7 @@ def main(screen, resolution, txt_config, n_tests, config, test_types, step_size)
                     width, height = screen.get_size()
     plots(time_dict,config)
 
+
 if __name__ == "__main__":
     width = 800
     height = 800
@@ -244,4 +245,4 @@ if __name__ == "__main__":
 
 
     screen.fill((255, 255, 255))
-    main(screen,(width, height), txt_config, 1, [6, 20, 60], [TestType.Disjunktion, TestType.Conjunktion], 10)
+    main(screen,(width, height), txt_config, 10, [6, 20, 60], [TestType.Disjunktion, TestType.Conjunktion], 10)
