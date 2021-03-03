@@ -76,6 +76,22 @@ def render_help_txt_3(screen, txt_config, height, width):
     for i in range(len(trail_1_info_txt)):
         screen.blit(trail_1_info_txt[i],(width/8,height/4+i*55))
 
+def render_txt_correct(screen, txt_config, height, width):
+    trail_1_info_txt = [
+        txt_config.render("Correct!", False, BLACK),
+    ]
+
+    for i in range(len(trail_1_info_txt)):
+        screen.blit(trail_1_info_txt[i],(width/8,height/4+i*55))
+
+def render_txt_wrong(screen, txt_config, height, width):
+    trail_1_info_txt = [
+        txt_config.render("Wrong!", False, BLACK),
+    ]
+
+    for i in range(len(trail_1_info_txt)):
+        screen.blit(trail_1_info_txt[i],(width/8,height/4+i*55))
+
 def place_points(point_list, width, height, screen):
     for set in point_list:
         if set[2] == Shape.RedCross:
@@ -97,6 +113,8 @@ class Scene(Enum):
     InfoOne      = 2,
     InfoTwo      = 3,
     Playing      = 4,
+    Wrong        = 5,
+    Correct      = 6,
 
 
 def generate_scene(screen, width, height, assignment, scene, txt_config):
@@ -116,6 +134,12 @@ def generate_scene(screen, width, height, assignment, scene, txt_config):
 
     elif scene == Scene.ControlGuide:
         render_help_txt_info(screen, txt_config, height, width)
+
+    elif scene == Scene.Correct:
+        render_txt_correct(screen, txt_config, height, width)
+
+    elif scene == Scene.Wrong:
+        render_txt_wrong(screen, txt_config, height, width)
 
     pygame.display.update()
 
@@ -153,7 +177,7 @@ def wait():
         elif event.type == KEYDOWN:
             break                
 
-from time import perf_counter
+from time import perf_counter, sleep
 
 
 
@@ -197,15 +221,19 @@ def main(screen, resolution, txt_config, n_tests, config, test_types, step_size)
 
                 elif event.type == KEYDOWN:
                     move = parse_move_py(event)
-                    print(move, target_bool)
+                    #print(move, target_bool)
 
                     if move == Move.Right:
                         update_time_dict(time_dict, (test_type,len(test)-target_bool, target_bool), start_time, perf_counter())
 
                         if target_bool:
-                            print("Correct")
+                            #print("Correct")
+                            generate_scene(screen, width, height, None, Scene.Correct, txt_config)
+                            sleep(1)
                         else:
-                            print("Incorrect")
+                            #print("Incorrect")
+                            generate_scene(screen, width, height, None, Scene.Wrong, txt_config)
+                            sleep(1)
                         break
 
                     elif move == Move.Wrong:
@@ -213,9 +241,13 @@ def main(screen, resolution, txt_config, n_tests, config, test_types, step_size)
                         update_time_dict(time_dict, (test_type, len(test)-target_bool, target_bool), start_time, perf_counter())
 
                         if not target_bool:
-                            print("Correct")
+                            #print("Correct")
+                            generate_scene(screen, width, height, None, Scene.Correct, txt_config)
+                            sleep(1)
                         else:
-                            print("Incorrect")
+                            #print("Incorrect")
+                            generate_scene(screen, width, height, None, Scene.Wrong, txt_config)
+                            sleep(1)
                         break
 
                     elif move == Move.Nothing or move == Move.Invalid:
@@ -246,3 +278,6 @@ if __name__ == "__main__":
 
     screen.fill((255, 255, 255))
     main(screen,(width, height), txt_config, 10, [6, 20, 60], [TestType.Disjunktion, TestType.Conjunktion], 10)
+
+    # add delay between states
+

@@ -124,9 +124,8 @@ def generate_tests(n_tests, config, test_type, step_size=10):
 
 def update_time_dict(default_dict, state, start_time, end_time):
     string_state = f'{state}'
-    print(default_dict[string_state])
+    #print(default_dict[string_state])
     default_dict[string_state].append(end_time - start_time)
-    #default_dict[string_state].append([1])
 
 
 def plots(time_dict,config):
@@ -157,7 +156,7 @@ def plots(time_dict,config):
     conjunk_absent.append(np.array(time_dict['(<TestType.Conjunktion: (1,)>, 60, False)']))
     
     plot_times = [disjunk_present, disjunk_absent, conjunk_present, conjunk_absent]
-    plot_names = ["disjunk_present", "disjunk_absent", "conjunk_present", "conjunk_absent"]
+    plot_names = ["Disjunktion with target present", "Disjunktion with target absent", "Conjunktion with target present", "Conjunktion with target absent"]
 
     x_kords = []
     y_kords = []
