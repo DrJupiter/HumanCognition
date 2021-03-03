@@ -12,17 +12,17 @@ RED = (255,0,0)
 BLUE = (0,0,255)
 
 SCALE = 50
-THICKNESS = 4
+THICKNESS = 3
 
 #screen = pygame.display.set_mode([width,height])
 
-def circle(x, y, color, x_resolution, y_resolution, screen):
-    pygame.draw.circle(screen,color,(x,y),np.min([x_resolution,y_resolution])/SCALE,THICKNESS)
+def circle(x, y, color, x_resolution, y_resolution, screen, step_size):
+    pygame.draw.circle(screen,color,(x,y),np.min([x_resolution,y_resolution])/(step_size*3),THICKNESS)
 
-def cross(x, y, color, x_resolution, y_resolution, screen):
+def cross(x, y, color, x_resolution, y_resolution, screen, step_size):
     min_val = np.min([x_resolution,y_resolution])
-    scaled_x = min_val/SCALE
-    scaled_y = min_val/SCALE
+    scaled_x = min_val/(step_size*3)
+    scaled_y = min_val/(step_size*3)
     pygame.draw.line(screen,color,(x-scaled_x, y-scaled_y),(x+scaled_x, y+scaled_y),THICKNESS)
     pygame.draw.line(screen,color,(x+scaled_x, y-scaled_y),(x-scaled_x, y+scaled_y),THICKNESS)
 
@@ -92,19 +92,19 @@ def render_txt_wrong(screen, txt_config, height, width):
     for i in range(len(trail_1_info_txt)):
         screen.blit(trail_1_info_txt[i],(width/8,height/4+i*55))
 
-def place_points(point_list, width, height, screen):
+def place_points(point_list, width, height, screen, step_size):
     for set in point_list:
         if set[2] == Shape.RedCross:
-            cross(set[0], set[1], RED, height, width, screen)
+            cross(set[0], set[1], RED, height, width, screen, step_size)
 
         elif set[2] == Shape.BlueCross:
-            cross(set[0], set[1], BLUE, height, width, screen)
+            cross(set[0], set[1], BLUE, height, width, screen, step_size)
         
         elif set[2] == Shape.RedCircle:
-            circle(set[0], set[1], RED, height, width, screen)
+            circle(set[0], set[1], RED, height, width, screen, step_size)
 
         elif set[2] == Shape.BlueCircle:
-            circle(set[0], set[1], BLUE, height, width, screen)
+            circle(set[0], set[1], BLUE, height, width, screen, step_size)
 
 @unique
 class Scene(Enum):
@@ -121,7 +121,7 @@ def generate_scene(screen, width, height, step_size, assignment, scene, txt_conf
     screen.fill(WHITE)
 
     if scene == Scene.Playing:
-        place_points(generate_points((width,height), step_size, assignment), width, height, screen)
+        place_points(generate_points((width,height), step_size, assignment), width, height, screen, step_size)
 
     elif scene == Scene.StartGuide:
         render_help_txt_1(screen, txt_config, height, width)
@@ -277,7 +277,7 @@ if __name__ == "__main__":
 
 
     screen.fill((255, 255, 255))
-    main(screen,(width, height), txt_config, 10, [6, 20, 60], [TestType.Disjunktion, TestType.Conjunktion], 20)
+    main(screen,(width, height), txt_config, 10, [6, 20, 60], [TestType.Disjunktion, TestType.Conjunktion], 30)
 
     # add delay between states
 
