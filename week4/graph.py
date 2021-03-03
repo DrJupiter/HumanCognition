@@ -117,11 +117,11 @@ class Scene(Enum):
     Correct      = 6,
 
 
-def generate_scene(screen, width, height, assignment, scene, txt_config):
+def generate_scene(screen, width, height, step_size, assignment, scene, txt_config):
     screen.fill(WHITE)
 
     if scene == Scene.Playing:
-        place_points(generate_points((width,height), 10, assignment), width, height, screen)
+        place_points(generate_points((width,height), step_size, assignment), width, height, screen)
 
     elif scene == Scene.StartGuide:
         render_help_txt_1(screen, txt_config, height, width)
@@ -187,11 +187,11 @@ def main(screen, resolution, txt_config, n_tests, config, test_types, step_size)
 
     width, height = resolution
 
-    generate_scene(screen, width, height, None, Scene.StartGuide, txt_config)
+    generate_scene(screen, width, height, step_size, None, Scene.StartGuide, txt_config)
 
     wait()
 
-    generate_scene(screen, width, height, None, Scene.ControlGuide, txt_config)
+    generate_scene(screen, width, height, step_size, None, Scene.ControlGuide, txt_config)
 
     wait()
 
@@ -199,9 +199,9 @@ def main(screen, resolution, txt_config, n_tests, config, test_types, step_size)
         tests = generate_tests(n_tests, config, test_type, step_size)
 
         if test_type == TestType.Disjunktion:
-            generate_scene(screen, width, height, None, Scene.InfoOne, txt_config)
+            generate_scene(screen, width, height, step_size, None, Scene.InfoOne, txt_config)
         elif test_type == TestType.Conjunktion:
-            generate_scene(screen, width, height, None, Scene.InfoTwo, txt_config)
+            generate_scene(screen, width, height, step_size, None, Scene.InfoTwo, txt_config)
 
         wait()
 
@@ -211,7 +211,7 @@ def main(screen, resolution, txt_config, n_tests, config, test_types, step_size)
 
             while True:
 
-                generate_scene(screen, width, height, test, Scene.Playing, txt_config) 
+                generate_scene(screen, width, height, step_size, test, Scene.Playing, txt_config) 
 
                 pygame.event.pump()
                 event = pygame.event.wait()
@@ -228,11 +228,11 @@ def main(screen, resolution, txt_config, n_tests, config, test_types, step_size)
 
                         if target_bool:
                             #print("Correct")
-                            generate_scene(screen, width, height, None, Scene.Correct, txt_config)
+                            generate_scene(screen, width, height, step_size, None, Scene.Correct, txt_config)
                             sleep(1)
                         else:
                             #print("Incorrect")
-                            generate_scene(screen, width, height, None, Scene.Wrong, txt_config)
+                            generate_scene(screen, width, height, step_size, None, Scene.Wrong, txt_config)
                             sleep(1)
                         break
 
@@ -242,11 +242,11 @@ def main(screen, resolution, txt_config, n_tests, config, test_types, step_size)
 
                         if not target_bool:
                             #print("Correct")
-                            generate_scene(screen, width, height, None, Scene.Correct, txt_config)
+                            generate_scene(screen, width, height, step_size, None, Scene.Correct, txt_config)
                             sleep(1)
                         else:
                             #print("Incorrect")
-                            generate_scene(screen, width, height, None, Scene.Wrong, txt_config)
+                            generate_scene(screen, width, height, step_size, None, Scene.Wrong, txt_config)
                             sleep(1)
                         break
 
@@ -277,7 +277,7 @@ if __name__ == "__main__":
 
 
     screen.fill((255, 255, 255))
-    main(screen,(width, height), txt_config, 10, [6, 20, 60], [TestType.Disjunktion, TestType.Conjunktion], 10)
+    main(screen,(width, height), txt_config, 10, [6, 20, 60], [TestType.Disjunktion, TestType.Conjunktion], 20)
 
     # add delay between states
 
