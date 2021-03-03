@@ -164,7 +164,7 @@ def parse_move_py(event) -> Move:
         return Move.Wrong
     else:
         if event.key in MODS:
-            return Move.Nothingj
+            return Move.Nothing
         return Move.Invalid
 
 def wait():
