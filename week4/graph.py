@@ -229,11 +229,11 @@ def main(screen, resolution, txt_config, n_tests, config, test_types, step_size)
                         if target_bool:
                             #print("Correct")
                             generate_scene(screen, width, height, step_size, None, Scene.Correct, txt_config)
-                            sleep(1)
+                            pygame.time.wait(1000)
                         else:
                             #print("Incorrect")
                             generate_scene(screen, width, height, step_size, None, Scene.Wrong, txt_config)
-                            sleep(1)
+                            pygame.time.wait(1000)
                         break
 
                     elif move == Move.Wrong:
@@ -243,11 +243,11 @@ def main(screen, resolution, txt_config, n_tests, config, test_types, step_size)
                         if not target_bool:
                             #print("Correct")
                             generate_scene(screen, width, height, step_size, None, Scene.Correct, txt_config)
-                            sleep(1)
+                            pygame.time.wait(1000)
                         else:
                             #print("Incorrect")
                             generate_scene(screen, width, height, step_size, None, Scene.Wrong, txt_config)
-                            sleep(1)
+                            pygame.time.wait(1000)
                         break
 
                     elif move == Move.Nothing or move == Move.Invalid:
