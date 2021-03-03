@@ -14,8 +14,6 @@ BLUE = (0,0,255)
 SCALE = 50
 THICKNESS = 3
 
-#screen = pygame.display.set_mode([width,height])
-
 def circle(x, y, color, x_resolution, y_resolution, screen, step_size):
     pygame.draw.circle(screen,color,(x,y),np.min([x_resolution,y_resolution])/(step_size*3),THICKNESS)
 
