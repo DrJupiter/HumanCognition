@@ -24,7 +24,8 @@ from copy import deepcopy
 def display_letters(input_letters, screen, txt_config, height, width):
     in_copy = deepcopy(input_letters)
     in_copy.insert(0,"!")
-    for c in input_letters:
+
+    for c in in_copy:
         letter = txt_config.render(f"{c.upper()}", False, BLACK)
         screen.blit(letter,(width/2-20,height/2-60))
         pygame.display.update()
@@ -38,10 +39,10 @@ def input_letter_display(display_input, screen, txt_config, height, width):
     
     screen.blit(disp_letters,(width/4,height/2+60))
     pygame.display.update()
-
+    
 def render_help_txt(screen, txt_config, height, width):
     intro_info_txt = [
-        txt_config.render("Welcome to _____", False, BLACK),
+        txt_config.render("Welcome to Free Recall", False, BLACK),
         txt_config.render("A number of letters will be displayed", False, BLACK),
         txt_config.render("Guess these correctly", False, BLACK),
         txt_config.render("By inputting letters, and pressing ENTER to accept your input", False, BLACK),
@@ -142,7 +143,7 @@ if __name__ == "__main__":
     height = 700
 
 
-    pygame.display.set_caption("Visual Search")
+    pygame.display.set_caption("Free Recall")
 
     pygame.display.init()
 
