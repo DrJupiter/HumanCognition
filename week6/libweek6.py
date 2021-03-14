@@ -25,10 +25,17 @@ def hop_field_net(n_patterns: int = 5,
     if wmtrx_noise_lvl < 0 or wmtrx_noise_lvl > 1:
         print(f"The WmtrxNoiseLvl must be between 0 and 1, received {wmtrx_noise_lvl}")
 
-    patterns = load_patterns(n_patterns) 
 
     test_pattern_idx = 1
-    train_pattern_idx = shuffle([i for i in range(1,n_patterns+1)])
+    _pat_range = [i for i in range(0,15)]
+    shuffle(_pat_range)
+    train_pattern_idx = _pat_range[:n_patterns]
+
+    patterns = load_patterns(n_patterns) 
+
+    train_patterns = patterns[train_pattern_idx,:]
+
+    print(train_patterns)
 
     # each pattern object contains 100 px
 
@@ -69,3 +76,6 @@ for i in range(len(patts)):
 
 show_patterns(r_patts)
 """
+
+
+hop_field_net()
