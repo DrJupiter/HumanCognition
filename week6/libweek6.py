@@ -1,7 +1,7 @@
 from random import shuffle
+from copy import deepcopy
 
 import csv
-from typing import Pattern
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -26,7 +26,6 @@ def hop_field_net(n_patterns: int = 5,
         print(f"The WmtrxNoiseLvl must be between 0 and 1, received {wmtrx_noise_lvl}")
 
 
-    test_pattern_idx = 1
 
     train_patterns = load_patterns_rand(n_patterns)
 
@@ -35,7 +34,24 @@ def hop_field_net(n_patterns: int = 5,
     w_mtrx = weight_matrix(n_neurons, n_patterns, train_patterns, wmtrx_noise_lvl)
 
     # a boolean matrix
-    flip_mtrx = np.where(np.random.rand(n_neurons) < test_pattern_noise_lvl, True, False)
+    #flip_mtrx = np.where(np.random.rand(n_neurons) < test_pattern_noise_lvl, True, False)
+
+    flip_mtrx = np.where(np.random.rand(n_neurons) < test_pattern_noise_lvl)
+
+    test_pattern_idx = 1
+    test_pattern = train_patterns[test_pattern_idx, :]
+    test_pattern[flip_mtrx] = np.random.randint(0,1,size=test_pattern[flip_mtrx].shape)*2-1
+
+    iterations = np.zeros(shape=(n_patterns, test_pattern.shape[0]))
+
+    iterations[0] = test_pattern
+
+    for i in range(len(iterations)-1):
+        #iterations[i+1] = np.sign(w_mtrx * (iterations[i, :]))
+        #iterations[i+1] = np.sign(w_mtrx * (iterations[i, :]))
+        iterations[i+1] = np.sign(np.dot(w_mtrx , iterations[0, :]))
+
+
 
 
 def weight_matrix(n_neurons, n_patterns, train_patterns, wmtrx_noise_lvl):
