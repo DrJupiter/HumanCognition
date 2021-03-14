@@ -1,7 +1,6 @@
 from random import shuffle
 
 import csv
-from typing import Pattern
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -73,27 +72,42 @@ def load_patterns_rand(n_patterns: int):
 
     return train_patterns
 
-def show_patterns(patterns: list):
+def show_patterns(train_patterns: list, selected_pattern: list, inter_patterns: list):
 
-    fig, axs = plt.subplots(1,len(patterns))
-    fig.subplots_adjust(hspace = .5, wspace=0.2)
+    fig, axs = plt.subplots(3,len(train_patterns))
+    fig.subplots_adjust(hspace = -.5, wspace=0.2)
 
-    axs = axs.ravel()
+    for i in range(len(train_patterns)):
+        axs[0, i].imshow(np.rot90(train_patterns[i].reshape((10,10)),axes=(1,0)), 'gray')
+        axs[0, i].get_xaxis().set_visible(False)
+        axs[0, i].get_yaxis().set_visible(False)
+        axs[0,i].set_title(f"Pattern {i}")
 
-    for i in range(len(patterns)):
-        axs[i].imshow(np.rot90(patterns[i].reshape((10,10)),axes=(1,0)), 'gray')
-        axs[i].get_xaxis().set_visible(False)
-        axs[i].get_yaxis().set_visible(False)
+    for i in range(len(selected_pattern)):
+        axs[1, i].imshow(np.rot90(selected_pattern[i].reshape((10,10)),axes=(1,0)), 'gray')
+        axs[1, i].get_xaxis().set_visible(False)
+        axs[1, i].get_yaxis().set_visible(False)
+        axs[1,i].set_title(f"Selected Pattern {i}")
+
+    for i in range(len(selected_pattern), len(train_patterns)):
+        axs[1, i].axis('off')
+
+    for i in range(len(inter_patterns)):
+        axs[2, i].imshow(np.rot90(inter_patterns[i].reshape((10,10)),axes=(1,0)), 'gray')
+        axs[2, i].get_xaxis().set_visible(False)
+        axs[2, i].get_yaxis().set_visible(False)
+        axs[2,i].set_title(f"Iteration {i}")
 
     plt.show()
 
+
 """
-patts = load_patterns(15)
+patts = load_patterns()
 r_patts = []
 for i in range(len(patts)):
     r_patts.append(patts[i])
 
-show_patterns(r_patts)
+show_patterns(r_patts, [r_patts[5]], r_patts)
 """
 
 if __name__ == "__main__":
