@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 from random import shuffle
 
 
@@ -17,7 +16,7 @@ def hop_field_net(n_patterns: int = 5,
     patterns = load_patterns(n_patterns) 
 
     test_pattern_idx = 1
-    train_pattern_idx = shuffle([i for i in range(1,n_patterns+1)])
+    train_pattern_idx = shuffle([i for i in range(1,15+1)])[:n_patterns]
 
     # each pattern object contains 100 px
 
@@ -25,7 +24,8 @@ def hop_field_net(n_patterns: int = 5,
 
 def load_patterns(n_patterns: int):
     return None
-=======
+
+
 import csv
 import numpy as np
 import matplotlib.pyplot as plt
@@ -62,4 +62,3 @@ plt.imshow(data[0].reshape((10,10)), 'gray')
 print(data[0].reshape((10,10)))
 
 plt.show()
->>>>>>> a0c4703a39744dd011803a3ca412859b2eaf7ad3
