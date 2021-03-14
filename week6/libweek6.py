@@ -1,5 +1,6 @@
 import csv
 import numpy as np
+import matplotlib.pyplot as plt
 
 # For code path
 import sys
@@ -15,12 +16,21 @@ with open(CODE_PATH.joinpath("patterns.csv"), newline='') as csv_file:
     csv_reader = csv.reader(csv_file, delimiter=';')
     data = []
     for row in csv_reader:
-        data.append(row)
-        
+        data.append(list(map(float, row)))
+
     data = np.array(data)
         
-
-print(data)
 print(np.shape(data))
-        
-print(data[1][1])
+
+
+data[data == -1.0] = 0
+
+#print(data)
+
+fig = plt.figure(figsize= (10,10))
+plt.title('XD')
+plt.imshow(data[0].reshape((10,10)), 'gray')
+
+print(data[0].reshape((10,10)))
+
+plt.show()
