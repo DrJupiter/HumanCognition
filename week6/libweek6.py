@@ -1,5 +1,15 @@
-<<<<<<< HEAD
 from random import shuffle
+
+import csv
+import numpy as np
+import matplotlib.pyplot as plt
+
+# For code path
+import sys
+import os
+from pathlib import Path
+CODE_PATH = Path(*Path(os.path.realpath(sys.argv[0])).parts[:-1])
+
 
 
 def hop_field_net(n_patterns: int = 5,
@@ -24,42 +34,24 @@ def hop_field_net(n_patterns: int = 5,
 
 
 def load_patterns(n_patterns: int):
-    return None
-=======
-import csv
-import numpy as np
-import matplotlib.pyplot as plt
 
-# For code path
-import sys
-import os
-from pathlib import Path
+    with open(CODE_PATH.joinpath("patterns.csv"), newline='') as csv_file:
+        csv_reader = csv.reader(csv_file, delimiter=';')
+        data = []
+        for row in csv_reader:
+            data.append(list(map(float, row)))
 
-CODE_PATH = Path(*Path(os.path.realpath(sys.argv[0])).parts[:-1])
+        data = np.array(data)
+    
+    print(np.shape(data))
 
 
+    return data
 
+def show_patterns(patterns: list):
 
-with open(CODE_PATH.joinpath("patterns.csv"), newline='') as csv_file:
-    csv_reader = csv.reader(csv_file, delimiter=';')
-    data = []
-    for row in csv_reader:
-        data.append(list(map(float, row)))
+    fig = plt.figure(figsize= (10,10))
+    plt.title('XD')
+    plt.imshow(patterns[0].reshape((10,10)), 'gray')
 
-    data = np.array(data)
-        
-print(np.shape(data))
-
-
-data[data == -1.0] = 0
-
-#print(data)
-
-fig = plt.figure(figsize= (10,10))
-plt.title('XD')
-plt.imshow(data[0].reshape((10,10)), 'gray')
-
-print(data[0].reshape((10,10)))
-
-plt.show()
->>>>>>> a0c4703a39744dd011803a3ca412859b2eaf7ad3
+    plt.show()
