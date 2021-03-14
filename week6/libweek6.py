@@ -1,6 +1,7 @@
 from random import shuffle
 
 import csv
+from typing import Pattern
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -55,10 +56,8 @@ def load_patterns():
         data = []
         for row in csv_reader:
             data.append(list(map(float, row)))
-
         data = np.array(data)
     
-
 
     return data
 
@@ -76,12 +75,26 @@ def load_patterns_rand(n_patterns: int):
 
 def show_patterns(patterns: list):
 
-    fig = plt.figure(figsize= (10,10))
-    plt.title('XD')
-    plt.imshow(patterns[0].reshape((10,10)), 'gray')
+    fig, axs = plt.subplots(1,len(patterns))
+    fig.subplots_adjust(hspace = .5, wspace=0.2)
+
+    axs = axs.ravel()
+
+    for i in range(len(patterns)):
+        axs[i].imshow(np.rot90(patterns[i].reshape((10,10)),axes=(1,0)), 'gray')
+        axs[i].get_xaxis().set_visible(False)
+        axs[i].get_yaxis().set_visible(False)
 
     plt.show()
 
+"""
+patts = load_patterns(15)
+r_patts = []
+for i in range(len(patts)):
+    r_patts.append(patts[i])
+
+show_patterns(r_patts)
+"""
 
 if __name__ == "__main__":
     hop_field_net()
