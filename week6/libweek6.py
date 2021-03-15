@@ -1,3 +1,6 @@
+# OBS:
+# To change input, go to the bottom of the file
+
 from random import shuffle
 from copy import deepcopy
 
@@ -11,29 +14,30 @@ import os
 from pathlib import Path
 CODE_PATH = Path(*Path(os.path.realpath(sys.argv[0])).parts[:-1])
 
-
-
 def hop_field_net(n_patterns: int = 5,
  test_pattern_noise_lvl: float = 0., wmtrx_noise_lvl: float = 0.):
     """
     hop_field_net takes 3 parameters.
 
-    The first n_patterns determines how many patterns are loaded as well as how many iterations are done during training.
+    The first n_patterns determines how many patterns are loaded as well as how many iterations are done during training. [1, 15]
 
-    The second test_pattern_noise_lvl determines the frequency at which pixels are flipped at in the initial selected image
+    The second test_pattern_noise_lvl determines the frequency at which pixels are flipped at in the initial selected image [0,1]
 
-    The third wmtrx_noise_lvl determines how much to scale the noise added to the weight matrix by.
+    The third wmtrx_noise_lvl determines how much to scale the noise added to the weight matrix by. [0,1]
 
     The hops field network is then run, and the outputs of it are displayed.
     """
     if n_patterns > 15 or n_patterns < 1:
-        print(f"The number of patterns must be between 1 and 15, received {n_patterns}")
+        print(f"ERROR: The number of patterns must be between 1 and 15, received {n_patterns}")
+        return None
 
     if test_pattern_noise_lvl < 0 or test_pattern_noise_lvl > 1:
-        print(f"The TestPatternNoiseLvl must be between 0 and 1, received {test_pattern_noise_lvl}")
+        print(f"ERROR: The TestPatternNoiseLvl must be between 0 and 1, received {test_pattern_noise_lvl}")
+        return None
 
     if wmtrx_noise_lvl < 0 or wmtrx_noise_lvl > 1:
-        print(f"The WmtrxNoiseLvl must be between 0 and 1, received {wmtrx_noise_lvl}")
+        print(f"ERROR: The WmtrxNoiseLvl must be between 0 and 1, received {wmtrx_noise_lvl}")
+        return None
 
 
 
@@ -138,5 +142,10 @@ def show_patterns(train_patterns: list, selected_pattern: list, iter_patterns: l
     plt.show()
 
 
+
 if __name__ == "__main__":
-    hop_field_net(15, 0.9, 0.6)
+
+    # Change here:
+    hop_field_net(5, 0, 0)
+    
+    # Hover function to view inputs
