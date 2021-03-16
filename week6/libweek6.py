@@ -148,4 +148,4 @@ if __name__ == "__main__":
     # Change here:
     hop_field_net(5, 0, 0)
     
-    # Hover function to view inputs
+    # Hover function to view inputs or read the function documentation at the top of the file under the function declaration.
