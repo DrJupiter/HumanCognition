@@ -14,6 +14,10 @@
 - - serien består både af leptoner, der var blandt de origanlle, der blev vist ved skærm 1 og tilfældige generet ud fra bestemte længder fra prototypen
 > > længderne er `lengths = [1., 1.5, 2., 2.5]`
 
+# Code notes
+
+
+
 __Kig om de falske leptoner har en distance på 2.5__
 
 
