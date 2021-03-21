@@ -82,4 +82,6 @@ def gen_learn_samples(n_dots, lrn_dists, p_type, n_v_lrn_plots, n_h_lrn_plots):
     
     return learn_samples, non_lepton_samples, test_samples
 
-print(gen_learn_samples(3, [1, 1.5, 2, 2.5], generate_prototype(3), 3, 5))
+if __name__ == "__main__":
+
+    print(gen_learn_samples(3, [1, 1.5, 2, 2.5], generate_prototype(3), 3, 5))
