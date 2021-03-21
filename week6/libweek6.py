@@ -55,7 +55,7 @@ def hop_field_net(n_patterns: int = 5,
 
 
     for i in range(len(iterations)-1):
-        iterations[i+1] = np.sign(np.dot(w_mtrx , iterations[i, :]))
+        iterations[i+1] = np.sign(np.matmul(w_mtrx ,iterations[i, :]))
 
     show_patterns(train_patterns, [train_patterns[test_pattern_idx]], iterations)
 
@@ -139,4 +139,4 @@ def show_patterns(train_patterns: list, selected_pattern: list, iter_patterns: l
 
 
 if __name__ == "__main__":
-    hop_field_net(15, 0.9, 0.6)
+    hop_field_net(5, 0.2, 0.6)
