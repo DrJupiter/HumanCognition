@@ -24,7 +24,7 @@ def get_f_h() -> (str, int):
     return filename, filehash
 
 
-def generate_prototype(n_dots: int):
+def gen_prototype(n_dots: int):
     return 2 * (np.random.rand(1, n_dots*2) - 1/2)
     
 import pickle
@@ -65,7 +65,7 @@ def gen_test_sample(n_dots, lrn_dists, p_type, n_v_lrn_plots, n_h_lrn_plots):
     samples += matlib.repmat(p_type, n_samples, 1)
     return samples
 
-def gen_learn_samples(n_dots, lrn_dists, p_type, n_v_lrn_plots, n_h_lrn_plots):
+def gen_samples(n_dots, lrn_dists, p_type, n_v_lrn_plots, n_h_lrn_plots):
     """
     returns alle the learn samples
     """ 
@@ -78,7 +78,8 @@ def gen_learn_samples(n_dots, lrn_dists, p_type, n_v_lrn_plots, n_h_lrn_plots):
     return learn_samples, non_lepton_samples, test_samples
 
 if __name__ == "__main__":
-        
+    1+1
+
     
 
     
