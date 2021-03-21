@@ -41,13 +41,7 @@ def load_prototype(path: Path) -> np.array:
     f.close()
     return prototype
 
-def main(n_dots: int, plots: (int, int)):
 
-    filename, filehash = get_f_h()
-
-    p_type = generate_prototype(n_dots)
-    
-    return None
 
 def gen_sample(n_dots, lrn_dist, p_type, n_v_lrn_plots, n_h_lrn_plots):
     n_samples = n_v_lrn_plots*n_h_lrn_plots
@@ -75,6 +69,7 @@ def gen_learn_samples(n_dots, lrn_dists, p_type, n_v_lrn_plots, n_h_lrn_plots):
     """
     returns alle the learn samples
     """ 
+
     learn_samples = gen_sample(n_dots, lrn_dists[1], p_type, n_v_lrn_plots, n_h_lrn_plots)
     non_lepton_samples = gen_sample(n_dots, lrn_dists[-1], p_type, n_v_lrn_plots, n_h_lrn_plots)
     test_samples = gen_test_sample(n_dots, lrn_dists, p_type, n_v_lrn_plots, n_h_lrn_plots)
@@ -83,5 +78,7 @@ def gen_learn_samples(n_dots, lrn_dists, p_type, n_v_lrn_plots, n_h_lrn_plots):
     return learn_samples, non_lepton_samples, test_samples
 
 if __name__ == "__main__":
+        
+    
 
-    print(gen_learn_samples(3, [1, 1.5, 2, 2.5], generate_prototype(3), 3, 5))
+    
