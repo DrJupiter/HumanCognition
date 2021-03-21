@@ -14,8 +14,8 @@ GREEN = (0,150,0)
 SCALE = 50
 THICKNESS = 3
 
-def circle(x, y, color, x_resolution, y_resolution, screen, step_size):
-    pygame.draw.circle(screen,color,(x,y),np.min([x_resolution,y_resolution])/(step_size*3),THICKNESS)
+def circle(x, y, color, x_resolution, y_resolution, screen):
+    pygame.draw.circle(screen,color,(x,y),np.min([x_resolution,y_resolution]),THICKNESS)
 
 def render_help_txt_info(screen, txt_config, height, width):
     intro_info_txt = [
@@ -26,73 +26,6 @@ def render_help_txt_info(screen, txt_config, height, width):
 
     for i in range(len(intro_info_txt)):
         screen.blit(intro_info_txt[i],(width/8,height/4+i*55))
-
-def render_help_txt_1(screen, txt_config, height, width):
-    intro_info_txt = [
-        txt_config.render("Welcome to visual search!", False, BLACK),
-        txt_config.render("Your reaction time is measured", False, BLACK),
-        txt_config.render("So be fast", False, BLACK),
-        txt_config.render("But also be precise", False, BLACK),
-        txt_config.render("Press any key to continue", False, BLACK)
-    ]
-
-    for i in range(len(intro_info_txt)):
-        screen.blit(intro_info_txt[i],(width/8,height/4+i*55))
-
-def render_help_txt_2(screen, txt_config, height, width):
-    trail_1_info_txt = [
-        txt_config.render("Target:", False, BLACK),
-        txt_config.render("  X", False, BLUE),
-        txt_config.render("or", False, BLACK),
-        txt_config.render("  O", False, RED),
-        txt_config.render(" ", False, BLACK),
-        txt_config.render("Distractor:", False, BLACK),
-        txt_config.render("  X", False, RED)
-    ]
-
-    for i in range(len(trail_1_info_txt)):
-        screen.blit(trail_1_info_txt[i],(width/8,height/4+i*55))
-
-def render_help_txt_3(screen, txt_config, height, width):
-    trail_1_info_txt = [
-        txt_config.render("Target:", False, BLACK),
-        txt_config.render("X", False, BLUE),
-        txt_config.render(" ", False, BLACK),
-        txt_config.render("Distractors:", False, BLACK),
-        txt_config.render("O", False, BLUE),
-        txt_config.render("Or:", False, BLACK),
-        txt_config.render("X", False, RED)
-    ]
-
-    for i in range(len(trail_1_info_txt)):
-        screen.blit(trail_1_info_txt[i],(width/8,height/4+i*55))
-
-def render_txt_correct(screen, txt_config, height, width):
-    trail_1_info_txt = [
-        txt_config.render("Correct!", False, BLACK),
-    ]
-
-    for i in range(len(trail_1_info_txt)):
-        screen.blit(trail_1_info_txt[i],(width/8,height/4+i*55))
-
-def render_txt_wrong(screen, txt_config, height, width):
-    trail_1_info_txt = [
-        txt_config.render("Wrong!", False, BLACK),
-    ]
-
-    for i in range(len(trail_1_info_txt)):
-        screen.blit(trail_1_info_txt[i],(width/8,height/4+i*55))
-
-def place_points(point_list, width, height, screen, step_size):
-    for set in point_list:
-        if set[2] == "red":
-            circle(set[0], set[1], RED, height, width, screen, step_size)
-
-        elif set[2] == "blue":
-            circle(set[0], set[1], BLUE, height, width, screen, step_size)
-
-        elif set[2] == "green":
-            circle(set[0], set[1], GREEN, height, width, screen, step_size)
         
 @unique
 class Scene(Enum):
@@ -105,15 +38,13 @@ class Scene(Enum):
     Correct      = 6,
 
 def generate_points_learn(resolution, matrix ):
-
-
     w, h = resolution
 
     points = []
     for plot_vec in matrix:
-        plot_vec[:2]
-
-    
+        circle(plot_vec[0], plot_vec[1], RED, w, h, screen)
+        circle(plot_vec[2], plot_vec[3], BLUE, w, h, screen)    
+        circle(plot_vec[4], plot_vec[5], GREEN, w, h, screen)
 
     return points
 
