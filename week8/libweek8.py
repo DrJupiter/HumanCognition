@@ -51,7 +51,7 @@ def main(n_dots: int, plots: (int, int)):
 
 def gen_sample(n_dots, lrn_dist, p_type, n_v_lrn_plots, n_h_lrn_plots):
     samples = np.random.rand(n_v_lrn_plots*n_h_lrn_plots , n_dots*2)-1/2
-    samples = np.divide(samples*lrn_dist , matlib.repmat(np.sqrt(np.sum(samples**2,axis=1)), n_dots*2, 1)  )
+    samples = np.divide(samples*lrn_dist , matlib.repmat(np.sqrt(np.sum(samples**2,axis=1)), n_dots*2)  )
     samples = samples + matlib.repmat(p_type, samples, 1)
     return samples
 
