@@ -94,7 +94,7 @@ if __name__ == "__main__":
     conf = [1.,1.5,2.,2.5]
     plot_resolution = (3,5)
     l, n, t = gen_samples(3, conf, gen_prototype(3), *plot_resolution)
-     
+    print(l.shape, n.shape,t.shape)
 
     
 
