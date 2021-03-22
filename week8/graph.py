@@ -105,82 +105,15 @@ from time import perf_counter, sleep
 
 def main(screen, resolution, txt_config, n_tests, config, test_types, step_size):
 
-    time_dict = defaultdict(list)
+    if fisk == fisk:
+        return None
 
-    width, height = resolution
+    elif move == Move.Quit:
+        print("Exiting")
+        exit(0)
 
-    generate_scene(screen, width, height, step_size, None, Scene.StartGuide, txt_config)
-
-    wait()
-
-    generate_scene(screen, width, height, step_size, None, Scene.ControlGuide, txt_config)
-
-    wait()
-
-    for test_type in test_types:
-        tests = generate_tests(n_tests, config, test_type, step_size)
-
-        if test_type == TestType.Disjunktion:
-            generate_scene(screen, width, height, step_size, None, Scene.InfoOne, txt_config)
-        elif test_type == TestType.Conjunktion:
-            generate_scene(screen, width, height, step_size, None, Scene.InfoTwo, txt_config)
-
-        wait()
-
-        for test, target_bool in tests:
-
-            start_time = perf_counter()
-
-            while True:
-
-                generate_scene(screen, width, height, step_size, test, Scene.Playing, txt_config) 
-
-                pygame.event.pump()
-                event = pygame.event.wait()
-
-                if event.type == QUIT:
-                    exit(0)
-
-                elif event.type == KEYDOWN:
-                    move = parse_move_py(event)
-                    #print(move, target_bool)
-
-                    if move == Move.Right:
-                        update_time_dict(time_dict, (test_type,len(test)-target_bool, target_bool), start_time, perf_counter())
-
-                        if target_bool:
-                            #print("Correct")
-                            generate_scene(screen, width, height, step_size, None, Scene.Correct, txt_config)
-                            pygame.time.wait(1000)
-                        else:
-                            #print("Incorrect")
-                            generate_scene(screen, width, height, step_size, None, Scene.Wrong, txt_config)
-                            pygame.time.wait(1000)
-                        break
-
-                    elif move == Move.Wrong:
-
-                        update_time_dict(time_dict, (test_type, len(test)-target_bool, target_bool), start_time, perf_counter())
-
-                        if not target_bool:
-                            #print("Correct")
-                            generate_scene(screen, width, height, step_size, None, Scene.Correct, txt_config)
-                            pygame.time.wait(1000)
-                        else:
-                            #print("Incorrect")
-                            generate_scene(screen, width, height, step_size, None, Scene.Wrong, txt_config)
-                            pygame.time.wait(1000)
-                        break
-
-                    elif move == Move.Nothing or move == Move.Invalid:
-                        continue
-
-                    elif move == Move.Quit:
-                        print("Exiting")
-                        exit(0)
-                elif event.type == VIDEORESIZE:
-                    width, height = screen.get_size()
-    plots(time_dict,config)
+    elif event.type == VIDEORESIZE:
+        width, height = screen.get_size()
 
 
 if __name__ == "__main__":
