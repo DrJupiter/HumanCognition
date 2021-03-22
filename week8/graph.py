@@ -14,7 +14,7 @@ BLUE = (0,0,255)
 GREEN = (0,150,0)
 GREY = (200, 200, 200)
 
-def circle(x, y, color, x_resolution, y_resolution, screen, thickness):
+def circle(x, y, color, screen, thickness):
     pygame.draw.circle(screen,color,(x,y),thickness,thickness) #2 = np.min([x_resolution,y_resolution])
 
 def render_help_txt_info(screen, txt_config, height, width):
@@ -68,9 +68,9 @@ def draw_borders(centers, shape, screen, w, h):
         
 def draw_leptons(centers, plot_vec, shape, screen, w, h, thickness):
     # takes coordinates
-    circle(plot_vec[0]*w/(5*shape[0]*2)+centers[0], plot_vec[1]*h/(5*shape[1]*2)+centers[1], RED, w, h, screen, thickness)
-    circle(plot_vec[2]*w/(5*shape[0]*2)+centers[0], plot_vec[3]*h/(5*shape[1]*2)+centers[1], BLUE, w, h, screen, thickness)    
-    circle(plot_vec[4]*w/(5*shape[0]*2)+centers[0], plot_vec[5]*h/(5*shape[1]*2)+centers[1], GREEN, w, h, screen, thickness)
+    circle(plot_vec[0]*w/(5*shape[0]*2)+centers[0], plot_vec[1]*h/(5*shape[1]*2)+centers[1], RED, screen, thickness)
+    circle(plot_vec[2]*w/(5*shape[0]*2)+centers[0], plot_vec[3]*h/(5*shape[1]*2)+centers[1], BLUE, screen, thickness)    
+    circle(plot_vec[4]*w/(5*shape[0]*2)+centers[0], plot_vec[5]*h/(5*shape[1]*2)+centers[1], GREEN, screen, thickness)
     # Make relative location scalable with size in such a way, that we can adjust the size of each tile realtive to the overall size of the plot
 
 def wait():
