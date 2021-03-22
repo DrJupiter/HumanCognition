@@ -14,9 +14,6 @@ BLUE = (0,0,255)
 GREEN = (0,150,0)
 GREY = (200, 200, 200)
 
-SCALE = 50
-THICKNESS = 5
-
 def circle(x, y, color, x_resolution, y_resolution, screen, thickness):
     pygame.draw.circle(screen,color,(x,y),thickness,thickness) #2 = np.min([x_resolution,y_resolution])
 
@@ -32,7 +29,6 @@ def render_help_txt_info(screen, txt_config, height, width):
 
 from itertools import product
 
-
 class Grid():
 
     def __init__(self, resolution, shape, matrix):
@@ -46,7 +42,7 @@ class Grid():
         self.h = resolution[1]
         self.h_offset = self.w/(shape[0]+1)
         self.v_offset = self.h/(shape[1]+1)
-        self.thickness = int(min([self.w/min(shape)*35, self.h/min(shape)*35]))
+        self.thickness = int(min([self.w/(min(shape)*35), self.h/min(shape)*35]))
 
     def get_centers(self, shape):
         self.h_offset = self.w/(shape[0]+1)
@@ -61,12 +57,7 @@ class Grid():
         for c_indx, tile in enumerate(self.tiles):
             draw_borders(centers[c_indx], shape, screen, self.w, self.h)
             draw_leptons(centers[c_indx], tile, shape, screen, self.w, self.h, self.thickness)
-            
-            
 
-
-    def normalize(self, matrix):
-        return None
 
 def draw_borders(centers, shape, screen, w, h):
     size_w = w/(shape[0]+0.25*sum(shape))
@@ -92,83 +83,6 @@ def wait():
         elif event.type == KEYDOWN:
             break  
 
-####################################################################
-
-@unique
-class Scene(Enum):
-    StartGuide   = 0,
-    ControlGuide = 1,
-    InfoOne      = 2,
-    InfoTwo      = 3,
-    Playing      = 4,
-    Wrong        = 5,
-    Correct      = 6,
-
-def generate_points_learn(resolution, matrix ):
-    w, h = resolution
-
-    points = []
-    for plot_vec in matrix:
-        circle(plot_vec[0], plot_vec[1], RED, w, h, screen)
-        circle(plot_vec[2], plot_vec[3], BLUE, w, h, screen)    
-        circle(plot_vec[4], plot_vec[5], GREEN, w, h, screen)
-
-    return points
-
-def generate_points_play(resolution, step_size, assignment):
-
-    w, h = resolution
-
-    points = []
-
-
-    return points
-
-def generate_scene(screen, width, height, step_size, assignment, scene, txt_config):
-    screen.fill(WHITE)
-
-    if scene == Scene.Playing:
-        place_points(generate_points((width,height), step_size, assignment), width, height, screen, step_size)
-
-    pygame.display.update()
-
-from pygame.constants import K_LSHIFT, K_RSHIFT, K_LCTRL, K_RCTRL, K_LALT, K_RALT, K_LMETA, K_RMETA
-
-MODS = [K_LSHIFT, K_RSHIFT, K_LCTRL, K_RCTRL, K_LALT, K_RALT, K_LMETA, K_RMETA] 
-
-@unique
-class Move(Enum):
-    Wrong = 0,
-    Right = 1,
-    Quit  = 2,
-    Nothing = 3
-    Invalid = 4,
-
-def parse_move_py(event) -> Move:
-    if event.key == pygame.K_q:
-        return Move.Quit
-    elif event.key == pygame.K_j:
-        return Move.Right
-    elif event.key == pygame.K_f:
-        return Move.Wrong
-    else:
-        if event.key in MODS:
-            return Move.Nothing
-        return Move.Invalid
-
-def wait():
-    while True:
-        pygame.event.pump()
-        event = pygame.event.wait()
-
-        if event.type == QUIT:
-            exit(0)
-        elif event.type == KEYDOWN:
-            break                
-
-from time import perf_counter, sleep
-
-#############################################
 def main(n_dots, lrn_dists, p_type, n_v_lrn_plots, n_h_lrn_plots, screen):
     
     learn_samples, non_lep_samples, tests = gen_samples(n_dots, lrn_dists, p_type, n_v_lrn_plots, n_h_lrn_plots)
@@ -178,20 +92,25 @@ def main(n_dots, lrn_dists, p_type, n_v_lrn_plots, n_h_lrn_plots, screen):
     pygame.display.update()
 
     while True:
+        pygame.event.pump()
+        event = pygame.event.wait()
 
-        wait()
-
-        """if move == Move.Quit:
-            print("Exiting")
+        if event.type == QUIT:
+            print("exiting")
             exit(0)
-
+        
         elif event.type == VIDEORESIZE:
-            width, height = screen.get_size()"""
+            #print("fish")
+            width_l, height_l = screen.get_size()
+            grid.update_resolution((width_l, height_l), (n_v_lrn_plots, n_h_lrn_plots))
+            screen.fill(GREY)
+            grid.draw((n_v_lrn_plots, n_h_lrn_plots), screen)
+            pygame.display.update()
 
 
 if __name__ == "__main__":
     width = 1000
-    height = 800 #int(800*3/5)
+    height = 800
 
     pygame.display.set_caption("fishhuner26")
     pygame.display.init()
