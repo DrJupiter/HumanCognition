@@ -57,75 +57,22 @@ class Grid():
     def draw(self, screen):
         centers = self.get_centers()
         for c_indx, tile in enumerate(self.tiles):
-            draw_borders(centers[c_indx], self.shape, screen, self.w, self.h)
-            draw_leptons(centers[c_indx], tile, self.shape, screen, self.w, self.h, self.thickness)
-            
-            
+            self.draw_borders(centers[c_indx], screen, self.w, self.h)
+            self.draw_leptons(centers[c_indx], tile, screen, self.w, self.h, self.thickness)
 
+    def draw_borders(self, centers, screen, w, h):
+        size_w = w/(self.shape[0]+0.25*sum(self.shape))
+        size_h = h/(self.shape[1]+0.25*sum(self.shape))
+        rect = pygame.Rect(centers[0]-size_w/2,centers[1]-size_h/2,size_w,size_h)
+        pygame.draw.rect(screen, WHITE, rect)
+        return None        
 
-def draw_borders(centers, shape, screen, w, h):
-    size_w = w/(shape[0]+0.25*sum(shape))
-    size_h = h/(shape[1]+0.25*sum(shape))
-    rect = pygame.Rect(centers[0]-size_w/2,centers[1]-size_h/2,size_w,size_h)
-    pygame.draw.rect(screen, WHITE, rect)
-    return None        
-        
-def draw_leptons(centers, plot_vec, shape, screen, w, h, thickness):
-    # takes coordinates
-    circle(plot_vec[0]*w/(5*shape[0]*2)+centers[0], plot_vec[1]*h/(5*shape[1]*2)+centers[1], RED, screen, thickness)
-    circle(plot_vec[2]*w/(5*shape[0]*2)+centers[0], plot_vec[3]*h/(5*shape[1]*2)+centers[1], BLUE, screen, thickness)    
-    circle(plot_vec[4]*w/(5*shape[0]*2)+centers[0], plot_vec[5]*h/(5*shape[1]*2)+centers[1], GREEN, screen, thickness)
-    # Make relative location scalable with size in such a way, that we can adjust the size of each tile realtive to the overall size of the plot
-
-def wait():
-    while True:
-        pygame.event.pump()
-        event = pygame.event.wait()
-
-        if event.type == QUIT:
-            exit(0)
-        elif event.type == KEYDOWN:
-            break  
-
-####################################################################
-
-@unique
-class Scene(Enum):
-    StartGuide   = 0,
-    ControlGuide = 1,
-    InfoOne      = 2,
-    InfoTwo      = 3,
-    Playing      = 4,
-    Wrong        = 5,
-    Correct      = 6,
-
-def generate_points_learn(resolution, matrix ):
-    w, h = resolution
-
-    points = []
-    for plot_vec in matrix:
-        circle(plot_vec[0], plot_vec[1], RED, w, h, screen)
-        circle(plot_vec[2], plot_vec[3], BLUE, w, h, screen)    
-        circle(plot_vec[4], plot_vec[5], GREEN, w, h, screen)
-
-    return points
-
-def generate_points_play(resolution, step_size, assignment):
-
-    w, h = resolution
-
-    points = []
-
-
-    return points
-
-def generate_scene(screen, width, height, step_size, assignment, scene, txt_config):
-    screen.fill(WHITE)
-
-    if scene == Scene.Playing:
-        place_points(generate_points((width,height), step_size, assignment), width, height, screen, step_size)
-
-    pygame.display.update()
+    def draw_leptons(self, centers, plot_vec, screen, w, h, thickness):
+        # takes coordinates
+        circle(plot_vec[0]*w/(5*self.shape[0]*2)+centers[0], plot_vec[1]*h/(5*self.shape[1]*2)+centers[1], RED, screen, thickness)
+        circle(plot_vec[2]*w/(5*self.shape[0]*2)+centers[0], plot_vec[3]*h/(5*self.shape[1]*2)+centers[1], BLUE, screen, thickness)    
+        circle(plot_vec[4]*w/(5*self.shape[0]*2)+centers[0], plot_vec[5]*h/(5*self.shape[1]*2)+centers[1], GREEN, screen, thickness)
+        # Make relative location scalable with size in such a way, that we can adjust the size of each tile realtive to the overall size of the plot
 
 from pygame.constants import K_LSHIFT, K_RSHIFT, K_LCTRL, K_RCTRL, K_LALT, K_RALT, K_LMETA, K_RMETA
 
@@ -150,33 +97,6 @@ def parse_move_py(event) -> Move:
         if event.key in MODS:
             return Move.Nothing
         return Move.Invalid
-
-def wait():
-    while True:
-        pygame.event.pump()
-        event = pygame.event.wait()
-
-        if event.type == QUIT:
-            exit(0)
-        elif event.type == KEYDOWN:
-            break                
-
-from time import perf_counter, sleep
-
-#############################################
-
-"""
-def main(n_dots, lrn_dists, p_type, n_v_lrn_plots, n_h_lrn_plots, screen):
-    
-    learn_samples, non_lep_samples, tests = gen_samples(n_dots, lrn_dists, p_type, n_v_lrn_plots, n_h_lrn_plots)
-    grid = Grid((width, height), (n_v_lrn_plots, n_h_lrn_plots) , learn_samples)
-
-    grid.draw((n_v_lrn_plots, n_h_lrn_plots), screen)
-    pygame.display.update()
-    wait()
-
-from libweek8 import gen_prototype, gen_samples
-"""
 
 def wait_grid(screen, resolution, grid):
     while True:
@@ -238,13 +158,9 @@ def main(screen, resolution, txt_config, n_dots=3, lrn_dists=[1.,1.5,2.,2.5], pl
     for i in range(len(inner)):
         inner[i] = iter(inner[i])
 
-    dict_test = defaultdict(lambda: 0)
-    for i in range(len(lrn_dists)):
-        dict_test[i]
+    dict_test = np.zeros(len(lrn_dists))
         
-    dict_lrn = defaultdict(lambda: 0)
-    for i in range(2):
-        dict_lrn[i]
+    dict_lrn = np.zeros(2) 
 
     while True:
 
