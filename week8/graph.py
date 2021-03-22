@@ -92,39 +92,7 @@ def wait():
         elif event.type == KEYDOWN:
             break  
 
-def main(n_dots, lrn_dists, p_type, n_v_lrn_plots, n_h_lrn_plots, screen):
-    
-    learn_samples, non_lep_samples, tests = gen_samples(n_dots, lrn_dists, p_type, n_v_lrn_plots, n_h_lrn_plots)
-    grid = Grid((width, height), (n_v_lrn_plots, n_h_lrn_plots) , learn_samples)
-
-    grid.draw((n_v_lrn_plots, n_h_lrn_plots), screen)
-    pygame.display.update()
-
-    while True:
-
-        wait()
-
-        if move == Move.Quit:
-            print("Exiting")
-            exit(0)
-
-        elif event.type == VIDEORESIZE:
-            width, height = screen.get_size()
-
-width = 1000
-height = 800 #int(800*3/5)
-
-pygame.display.set_caption("fishhuner26")
-pygame.display.init()
-screen = pygame.display.set_mode((width, height),RESIZABLE)
-
-screen.fill(GREY)
-main(3, [1, 1.5, 2, 2.5], gen_prototype(3), 10, 10, screen)
-exit(0)
-
-
-
-
+####################################################################
 
 @unique
 class Scene(Enum):
@@ -200,39 +168,34 @@ def wait():
 
 from time import perf_counter, sleep
 
+#############################################
+def main(n_dots, lrn_dists, p_type, n_v_lrn_plots, n_h_lrn_plots, screen):
+    
+    learn_samples, non_lep_samples, tests = gen_samples(n_dots, lrn_dists, p_type, n_v_lrn_plots, n_h_lrn_plots)
+    grid = Grid((width, height), (n_v_lrn_plots, n_h_lrn_plots) , learn_samples)
 
+    grid.draw((n_v_lrn_plots, n_h_lrn_plots), screen)
+    pygame.display.update()
 
-def main(screen, resolution, txt_config, n_tests, config, test_types, step_size):
+    while True:
 
-    if fisk == fisk:
-        return None
+        wait()
 
-    elif move == Move.Quit:
-        print("Exiting")
-        exit(0)
+        """if move == Move.Quit:
+            print("Exiting")
+            exit(0)
 
-    elif event.type == VIDEORESIZE:
-        width, height = screen.get_size()
+        elif event.type == VIDEORESIZE:
+            width, height = screen.get_size()"""
 
 
 if __name__ == "__main__":
-    width = 800
-    height = 800
+    width = 1000
+    height = 800 #int(800*3/5)
 
-
-    pygame.display.set_caption("Visual Search")
-
+    pygame.display.set_caption("fishhuner26")
     pygame.display.init()
-
-    pygame.font.init()
-    txt_config = pygame.font.SysFont('Times New Roman', 40)
-
     screen = pygame.display.set_mode((width, height),RESIZABLE)
 
-
-    screen.fill((255, 255, 255))
-    main(screen,(width, height), txt_config, 10, [6, 20, 60], [TestType.Disjunktion, TestType.Conjunktion], 30)
-
-    # gen_samples(n_dots, lrn_dists, p_type, n_v_lrn_plots, n_h_lrn_plots)
-    # add delay between states
-
+    screen.fill(GREY)
+    main(3, [1, 1.5, 2, 2.5], gen_prototype(3), 10, 10, screen)
