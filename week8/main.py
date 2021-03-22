@@ -29,8 +29,11 @@ class Grid():
     def draw(self, matrix, shape, screen):
         centers = self.get_centers(shape)
         for c_indx, tile in enumerate(self.tiles):
-            tile.draw_leptons(centers[c_indx], matrix[c_indx], screen)
+            tile.draw_leptons(centers[c_indx], matrix[c_indx], shape, screen, self.w, self.h)
 
+    def normalize(self, matrix):
+        
+        
 
 
 class Tile():
@@ -42,13 +45,14 @@ class Tile():
     def draw_border(self):
         # draw border
     
-    def draw_leptons(self, centers, plot_vec, screen):
+    def draw_leptons(self, centers, plot_vec, shape, screen, w, h):
         # takes coordinates
-        circle(plot_vec[0]+centers[0], plot_vec[1]+centers[1], RED, w, h, screen)
-        circle(plot_vec[2]+centers[0], plot_vec[3]+centers[1], BLUE, w, h, screen)    
-        circle(plot_vec[4]+centers[0], plot_vec[5]+centers[1], GREEN, w, h, screen)
+        circle(plot_vec[0]*w/(shape[0]*2)+centers[0], plot_vec[1]*h/(shape[1]*2)+centers[1], RED, w, h, screen)
+        circle(plot_vec[2]*w/(shape[0]*2)+centers[0], plot_vec[3]*h/(shape[1]*2)+centers[1], BLUE, w, h, screen)    
+        circle(plot_vec[4]*w/(shape[0]*2)+centers[0], plot_vec[5]*h/(shape[1]*2)+centers[1], GREEN, w, h, screen)
         # Make relative location scalable with size in such a way, that we can adjust the size of each tile realtive to the overall size of the plot
 
     def rescale(resolution):
         # rescale in grid
     
+ 
