@@ -80,9 +80,9 @@ class Move(Enum):
 def parse_move_py(event) -> Move:
     if event.key == pygame.K_q:
         return Move.Quit
-    elif event.key == pygame.K_j:
+    elif event.key == pygame.K_y:
         return Move.Right
-    elif event.key == pygame.K_f:
+    elif event.key == pygame.K_n:
         return Move.Wrong
     else:
         if event.key in MODS:
@@ -103,7 +103,15 @@ from time import perf_counter, sleep
 
 
 
-def main(screen, resolution, txt_config, n_tests, config, test_types, step_size):
+
+from libweek8 import gen_prototype, gen_samples
+
+def main(screen, resolution, txt_config, n_dots=3, lrn_dists=[1.,1.5,2.,2.5], plot_resolution=(5,3)):
+
+    ptype = gen_prototype(n_dots)
+
+    l_lep, non_lep, test_lep = gen_samples(n_dots, lrn_dists, ptype, *plot_resolution)
+
 
     if fisk == fisk:
         return None

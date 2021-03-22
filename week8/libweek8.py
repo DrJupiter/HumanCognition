@@ -55,6 +55,7 @@ def gen_test_sample(n_dots, lrn_dists, p_type, n_v_lrn_plots, n_h_lrn_plots):
     n_samples = n_v_lrn_plots*n_h_lrn_plots
 
     samples = np.random.rand(len(lrn_dists), n_samples, n_dots*2)-1/2
+    
 
     d = []
     for i in range(len(lrn_dists)):
@@ -77,8 +78,23 @@ def gen_samples(n_dots, lrn_dists, p_type, n_v_lrn_plots, n_h_lrn_plots):
     
     return learn_samples, non_lepton_samples, test_samples
 
+def gen_test_indecies(n_dist_types,plot_resolution):
+
+    outer = [x for x in range(n_dist_types)] * plot_resolution[0]*plot_resolution[1]
+    shuffle(outer)
+    inner = [[x for x in range(plot_resolution[0]*plot_resolution[1])] for i in range(n_dist_types)]  
+    for i in inner:
+        shuffle(i)
+
+    return outer, inner 
+
+from random import shuffle
+
 if __name__ == "__main__":
-    1+1
+    conf = [1.,1.5,2.,2.5]
+    plot_resolution = (3,5)
+    l, n, t = gen_samples(3, conf, gen_prototype(3), *plot_resolution)
+     
 
     
 
