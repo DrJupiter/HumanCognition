@@ -197,7 +197,7 @@ def main(screen, resolution, txt_config, n_dots=3, lrn_dists=[1.,1.5,2.,2.5], pl
                     if move == Move.Right:                            
                         dict_lrn[1] += 1        
 
-    #print(dict_test,dict_lrn)
+    print(dict_test,dict_lrn)
     plots(dict_lrn, dict_test,[lrn_dists[1],lrn_dists[-1]], lrn_dists, plot_resolution) 
 #        pygame.event.pump()
 #        event = pygame.event.wait()
