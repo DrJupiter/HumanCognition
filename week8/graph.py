@@ -37,7 +37,7 @@ class Grid():
         self.tiles = matrix
         self.shape = shape
         self.thickness = int(min([self.w/(min(self.shape)*35), self.h/min(self.shape)*35]))
-        print(self.tiles.shape)
+        #print(self.tiles.shape)
     
     def update_resolution(self, resolution):
         self.w = resolution[0]
@@ -197,7 +197,7 @@ def main(screen, resolution, txt_config, n_dots=3, lrn_dists=[1.,1.5,2.,2.5], pl
                     if move == Move.Right:                            
                         dict_lrn[1] += 1        
 
-    print(dict_test,dict_lrn)
+    #print(dict_test,dict_lrn)
     plots(dict_lrn, dict_test,[lrn_dists[1],lrn_dists[-1]], lrn_dists, plot_resolution) 
 #        pygame.event.pump()
 #        event = pygame.event.wait()
@@ -223,4 +223,4 @@ if __name__ == "__main__":
 
     screen.fill(GREY)
 #    main(3,(width,height), [1, 1.5, 2, 2.5], gen_prototype(3), (10, 10), screen)
-    main(screen, (width, height), None, 3, [1.,1.5,2.,2.5], (2,2))
+    main(screen, (width, height), None, 3, [1.,1.5,2.,2.5], (5,3))
