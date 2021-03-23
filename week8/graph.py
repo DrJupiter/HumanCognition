@@ -36,7 +36,7 @@ class Grid():
         self.h = resolution[1]
         self.tiles = matrix
         self.shape = shape
-        self.thickness = int(min([self.w/(min(self.shape)*35), self.h/min(self.shape)*35]))
+        self.thickness = int(min([self.w/(min(self.shape)*35), self.h/(min(self.shape)*35)]))
         #print(self.tiles.shape)
     
     def update_resolution(self, resolution):
@@ -215,7 +215,7 @@ def main(screen, resolution, txt_config, n_dots=3, lrn_dists=[1.,1.5,2.,2.5], pl
 
 if __name__ == "__main__":
     width = 2000
-    height = 1000 #int(800*3/5)
+    height = 1000 
 
     pygame.display.set_caption("fishhuner26")
     pygame.display.init()
