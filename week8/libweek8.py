@@ -100,31 +100,35 @@ def plots(dict_learn, dict_tests, l_dists, t_dists, plot_resolution):
     y_err_t = []
     for i, n_correct in enumerate(dict_tests):
         x_kords_t.append(t_dists[i])
-        p=n_correct/N
+        p=n_correct/N*100
         y_kords_t.append(p)
-        y_err_t.append(np.sqrt((p*(1-p))/(N)))
+        y_err_t.append(np.sqrt((p*(100-p))/(N)))
 
     x_kords_l = []
     y_kords_l = []
     y_err_l = []
     for i, n_correct in enumerate(dict_learn):
         x_kords_l.append(l_dists[i])
-        p=n_correct/N
+        p=n_correct/N*100
         y_kords_l.append(p)
-        y_err_l.append(np.sqrt((p*(1-p))/(N)))
+        y_err_l.append(np.sqrt((p*(100-p))/(N)))
     
     plt.figure()
     plt.subplot(2,1,1)
     plt.bar(x_kords_t, y_kords_t, width = 0.4, yerr = y_err_t, ecolor = 'red', capsize=10, tick_label = [str(x_kords_t[0]), str(x_kords_t[1]),str(x_kords_t[2]), str(x_kords_t[3])])
     plt.title(f"{plot_names[0]}")
     plt.xlabel('distance to prototype')
-    plt.ylabel('accuracy')
+    plt.ylabel('% lepton responses')
+    plt.ylim((0,100))
 
     plt.subplot(2,1,2)
     plt.bar(x_kords_l, y_kords_l, width = 0.5, yerr = y_err_l, ecolor = 'red', capsize=10, tick_label = [str(x_kords_l[0]), str(x_kords_l[1])])
     plt.title(f"{plot_names[1]}")
     plt.xlabel('distance to prototype')
-    plt.ylabel('accuracy')
+    plt.ylabel('% lepton responses')
+    plt.ylim((0,100))
+
+
     
     plt.tight_layout()
     plt.show()

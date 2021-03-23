@@ -17,15 +17,40 @@ GREY = (200, 200, 200)
 def circle(x, y, color, screen, thickness):
     pygame.draw.circle(screen,color,(x,y),thickness,thickness) #2 = np.min([x_resolution,y_resolution])
 
-def render_help_txt_info(screen, txt_config, height, width):
+def start_info(screen, txt_config, resolution):
+    width, height = resolution
     intro_info_txt = [
-        txt_config.render("Press \"j\" when you see a target!", False, BLACK),
-        txt_config.render("Press \"f\" when you see no target", False, BLACK),
-        txt_config.render("Press any key to start the experiment", False, BLACK),
+        txt_config.render("This is P_Types", False, BLACK),
+        txt_config.render("You will first be presented with 15 leptons", False, BLACK),
+        txt_config.render("Then you will be presented with 15 non-leptons", False, BLACK),
+        txt_config.render(" ", False, BLACK),
+        txt_config.render("Press any key to continue", False, BLACK),
     ]
 
     for i in range(len(intro_info_txt)):
         screen.blit(intro_info_txt[i],(width/8,height/4+i*55))
+
+def render_help_txt(screen, txt_config, resolution):
+    width, height = resolution
+    intro_info_txt = [
+        txt_config.render("Are the following pictures Leptons or non-leptons?", False, BLACK),
+        txt_config.render("Press Y if it is", False, BLACK),
+        txt_config.render("Press N if it isnt", False, BLACK),
+        txt_config.render(" ", False, BLACK),
+        txt_config.render("Press any key to continue", False, BLACK),
+    ]
+
+    for i in range(len(intro_info_txt)):
+        screen.blit(intro_info_txt[i],(width/8,height/4+i*55))
+
+def render_help_txt2(screen, txt_config, resolution):
+    width, height = resolution
+    intro_info_txt = [
+        txt_config.render("Is this a lepton?: Y/N", False, BLACK),
+    ]
+
+    for i in range(len(intro_info_txt)):
+        screen.blit(intro_info_txt[i],(width/3,80))
 
 from itertools import product
 
@@ -98,7 +123,7 @@ def parse_move_py(event) -> Move:
             return Move.Nothing
         return Move.Invalid
 
-def wait_grid(screen, resolution, grid):
+def wait_grid(screen, resolution, grid, progess=2):
     while True:
         pygame.event.pump()
         event = pygame.event.wait()
@@ -113,14 +138,46 @@ def wait_grid(screen, resolution, grid):
             grid.update_resolution(resolution)
             screen.fill(GREY)
             grid.draw(screen)
+            if progess == 2:
+                render_help_txt2(screen, txt_config, resolution)
             pygame.display.update()
     return resolution, move
+
+def wait(progess, resolution):
+    while True:
+        pygame.event.pump()
+        event = pygame.event.wait()
+
+        if event.type == QUIT:
+            exit(0)
+        elif event.type == KEYDOWN:
+            break
+        elif event.type == VIDEORESIZE:
+            resolution = screen.get_size()
+
+            if progess == 0:
+                screen.fill(GREY)
+                start_info(screen, txt_config, resolution)
+                pygame.display.update()
+            elif progess == 1:
+                screen.fill(GREY)
+                render_help_txt(screen, txt_config, resolution)
+                pygame.display.update()
+    
+    return resolution
 
 from collections import defaultdict
 
 def main(screen, resolution, txt_config, n_dots=3, lrn_dists=[1.,1.5,2.,2.5], plot_resolution=(5,3)):
-
+    
+    progess = 0
+    screen.fill(GREY)
+    start_info(screen, txt_config, resolution)
+    pygame.display.update()
+    resolution = wait(progess, resolution)
+    screen.fill(GREY)
     ptype = gen_prototype(n_dots)
+    
 
     lrn_lep, non_lep, test_lep = gen_samples(n_dots, lrn_dists, ptype, *plot_resolution)
 
@@ -134,7 +191,7 @@ def main(screen, resolution, txt_config, n_dots=3, lrn_dists=[1.,1.5,2.,2.5], pl
     grid = Grid(resolution,plot_resolution, lrn_lep)
     grid.draw(screen)
     pygame.display.update()
-    resolution, _ = wait_grid(screen,resolution, grid)
+    resolution, _ = wait_grid(screen,resolution, grid, progess)
     pygame.display.update()
     
 
@@ -144,9 +201,16 @@ def main(screen, resolution, txt_config, n_dots=3, lrn_dists=[1.,1.5,2.,2.5], pl
     grid = Grid(resolution,plot_resolution, non_lep)
     grid.draw(screen)
     pygame.display.update()
-    resolution, _ = wait_grid(screen, resolution, grid)
+    resolution, _ = wait_grid(screen, resolution, grid, progess)
     pygame.display.update()
 
+    progess = 1
+    screen.fill(GREY)
+    render_help_txt(screen, txt_config, resolution)
+    pygame.display.update()
+    resolution = wait(progess, resolution)
+    screen.fill(GREY)
+    progess = 2
     # loop through the test cases for the leptons
     
     # The reason for the plus 2 is that we want to iterate over 
@@ -176,6 +240,7 @@ def main(screen, resolution, txt_config, n_dots=3, lrn_dists=[1.,1.5,2.,2.5], pl
                     grid = Grid(resolution, (1,1), test_lep[outer_idx][inner_idx].reshape(1,6))
                     screen.fill(GREY)
                     grid.draw(screen)
+                    render_help_txt2(screen, txt_config, resolution)
                     pygame.display.update()
                     resolution, move = wait_grid(screen, resolution, grid)
                     if move == Move.Right:                            
@@ -184,6 +249,7 @@ def main(screen, resolution, txt_config, n_dots=3, lrn_dists=[1.,1.5,2.,2.5], pl
                     grid = Grid(resolution, (1,1), lrn_lep[inner_idx].reshape(1,6))
                     screen.fill(GREY)
                     grid.draw(screen)
+                    render_help_txt2(screen, txt_config, resolution)
                     pygame.display.update()
                     resolution, move = wait_grid(screen, resolution, grid)
                     if move == Move.Right:                            
@@ -192,6 +258,7 @@ def main(screen, resolution, txt_config, n_dots=3, lrn_dists=[1.,1.5,2.,2.5], pl
                     grid = Grid(resolution, (1,1), non_lep[inner_idx].reshape(1,6))
                     screen.fill(GREY)
                     grid.draw(screen)
+                    render_help_txt2(screen, txt_config, resolution)
                     pygame.display.update()
                     resolution, move = wait_grid(screen, resolution, grid)
                     if move == Move.Right:                            
@@ -214,13 +281,15 @@ def main(screen, resolution, txt_config, n_dots=3, lrn_dists=[1.,1.5,2.,2.5], pl
 """
 
 if __name__ == "__main__":
-    width = 2000
-    height = 1000 
+    width = 800
+    height = 800 
 
-    pygame.display.set_caption("fishhuner26")
+    pygame.font.init()
+    txt_config = pygame.font.SysFont('Times New Roman', 30)
+    pygame.display.set_caption("P_Types")
     pygame.display.init()
     screen = pygame.display.set_mode((width, height),RESIZABLE)
 
     screen.fill(GREY)
 #    main(3,(width,height), [1, 1.5, 2, 2.5], gen_prototype(3), (10, 10), screen)
-    main(screen, (width, height), None, 3, [1.,1.5,2.,2.5], (5,3))
+    main(screen, (width, height), txt_config, 3, [1.,1.5,2.,2.5], (5,3))
